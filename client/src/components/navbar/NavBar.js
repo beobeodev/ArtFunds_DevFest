@@ -1,6 +1,7 @@
 import React from 'react'
 import './NavBar.css'
 import '../../'
+import { Link } from 'react-router-dom'
 
 const NavBar = () => {
   const connectWallet = async () => {
@@ -9,32 +10,52 @@ const NavBar = () => {
   }
 
   return (
-    <nav id='main-nav'>
-      <div class='container'>
+    <nav id='main-nav' className='sticky'>
+      <div className='container'>
         <div id='logo'>
-          <a href='index.html'>ArtFunds</a>
+          <Link to='/' className='home'>
+            ArtFunds
+          </Link>
         </div>
         <div id='navbar'>
           <ul>
             <li>
-              <a href='/#' class='btn btn-nav'>
+              <a href='/#' className='btn btn-nav'>
                 Trang chủ
               </a>
             </li>
             <li>
-              <a href='/#' class='btn btn-nav'>
+              <a href='/#' className='btn btn-nav'>
                 Sàn giao dịch
               </a>
             </li>
             <li>
-              <a href='/#' class='btn btn-nav'>
+              <a href='/#' className='btn btn-nav'>
                 Bộ sưu tập
               </a>
             </li>
-            <li>
-              <a href='/#'>
-                <i class='fas fa-user-circle fa-lg'></i>
+            {/* <li>
+              <a href='/#' className='btn btn-nav'>
+                Kết nối ví
               </a>
+            </li> */}
+            <li>
+              <a href='/#' className='btn btn-nav'>
+                Tài khoản
+              </a>
+              <ul>
+                <li>
+                  <Link to='/mycollection' className='dropdown_account'>
+                    Hồ sơ của tôi
+                  </Link>
+                </li>
+                <li>
+                  <a href='/mycollection.html'>Bộ sưu tập của tôi</a>
+                </li>
+                <li>
+                  <a href='/creatcollection.html'>Tạo bộ sưu tập mới</a>
+                </li>
+              </ul>
             </li>
             <li>
               <button className='button_connect' onClick={connectWallet}>

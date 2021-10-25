@@ -1,0 +1,52 @@
+.btn-dark {
+  background: #333;
+  color: #f4f4f4f4;
+  border: 1px solid #333;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.my-collection {
+  width: 80vw;
+}
+
+.my-collection .container-title {
+  text-align: center;
+}
+
+.my-collection .container {
+  margin: 120px auto;
+}
+
+.new-collection {
+  padding-top: 1.5rem;
+  padding-bottom: 3rem;
+}
+
+.collection {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* column-gap: 30px; */
+  row-gap: 40px;
+}
+
+.created-collection {
+  display: block;
+  /* margin: 1rem 2rem; */
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  /* background: #ffffff; */
+  /* border: 1px solid rgba(0, 0.2, 0, 0.2); */
+  border-radius: 5px;
+}
+
+.created-collection .image-cover img {
+  height: 300px;
+  border-radius: 10px;
+  /* padding-top: 1.2rem; */
+}
+
+.created-collection .content-cover {
+  /* padding: 1.2rem 0; */
+}
