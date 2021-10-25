@@ -1,0 +1,118 @@
+.btn {
+  position: relative;
+  padding: 0.5em;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+  /* font-size: 18px; */
+  margin: 0.8em;
+}
+
+.btn-nav::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 2px;
+  width: 0;
+  left: 0;
+  background-color: #000000;
+  transition: width 0.3s ease-in-out;
+}
+
+.btn-nav::after {
+  bottom: 0;
+}
+
+.btn-nav:hover:after {
+  width: 70%;
+}
+#main-nav {
+  background-color: #ffffff;
+  text-align: center;
+}
+
+#main-nav .container {
+  padding: 0.8rem 1.2rem;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  align-items: center;
+  justify-content: space-around;
+  box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+#navbar ul {
+  list-style: none;
+}
+
+#navbar ul li {
+  color: #333;
+  display: inline-block;
+  padding: 1rem;
+  position: relative;
+}
+
+#navbar ul li ul {
+  display: none;
+}
+
+#main-nav #logo a {
+  font-size: 2rem;
+  font-family: 'Dancing Script', cursive;
+}
+
+#navbar ul li a {
+  color: #333;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+#navbar ul li:hover ul {
+  display: block;
+  position: absolute;
+  left: 10px;
+  right: 20px;
+  width: 200px;
+  margin-top: 1.2rem;
+}
+
+#navbar ul li:hover ul li {
+  display: block;
+  background: #e7e7e7;
+}
+
+#navbar ul li:hover ul li a {
+  color: #333;
+}
+
+#navbar ul li:hover ul li:hover {
+  color: inherit;
+  background: #e0e0e0;
+}
+
+.button_connect {
+  width: 160px;
+  padding: 12px 0px;
+  font-weight: 600;
+  font-size: 20px;
+  border: 0;
+  border-radius: 30px;
+  color: white;
+  background-color: #fd607d;
+  cursor: pointer;
+  transition: all 0.25s linear;
+  box-shadow: 0 3px 0 0 #93263a;
+}
+
+.button_connect:hover {
+  background-color: #ffe1de;
+  color: #fd607d;
+}
+
+.button_connect:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 0 #93263a;
+}
