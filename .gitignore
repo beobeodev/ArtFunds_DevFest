@@ -9,10 +9,10 @@
 /coverage
 
 # production
-/build
+/client/build
 
 # abis
-/src/abis
+/client/src/abis
 
 # misc
 .DS_Store
