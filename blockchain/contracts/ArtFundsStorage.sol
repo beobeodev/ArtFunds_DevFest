@@ -10,7 +10,7 @@ contract ArtFundsStorage is ERC721 {
   string public collectionNameSymbol;
 
 
-   // initialize contract while deployment with contract's collection name and token
+  // initialize contract while deployment with contract's collection name and token
   constructor() ERC721("ArtFunds Collection", "AF") {
     collectionName = name();
     collectionNameSymbol = symbol();
