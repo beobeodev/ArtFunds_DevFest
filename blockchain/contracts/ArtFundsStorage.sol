@@ -15,4 +15,5 @@ contract ArtFundsStorage is ERC721 {
     collectionName = name();
     collectionNameSymbol = symbol();
   }
+  
 }
