@@ -23,18 +23,14 @@ contract ArtFundsStorage is ERC721 {
 
     struct Collection {
         uint256 tokenId;
-        string tokenName;
-        string tokenURI;
         string name;
-        address mintedBy;
-        address Owner;
-        uint256 numberOfTransfers;
         uint256 digitalItemCount;
         DigitalItem[] digitalItems;
     }
     // A dynamically-sized array of `Collection` structs.
     Collection[] public collections;
     DigitalItem[] public digitalItems;
+
     struct Order {
         address maker;
         address taker;
@@ -62,37 +58,37 @@ contract ArtFundsStorage is ERC721 {
     mapping(string => bool) public tokenURIExists;
     // This declares a state variable that
     // stores a `Collection` struct for each possible address.
-    mapping(address => Collection) public collection;
-    mapping(address => DigitalItem) public digitalItem;
+    mapping(address => Collection[]) public collectionn;
+    mapping(address => DigitalItem[]) public digitalItemm;
 
-    function setDigitalItem(
-        address _address,
-        uint256 _tokenId,
-        string memory _tokenName,
-        string memory _tokenURI,
-        string memory _name,
-        address _mintedBy,
-        address _currentOwner,
-        address _previousOwner,
-        uint256 _price,
-        uint256 _numberOfTransfers,
-        bool _forSale
-    ) internal {
-        digitalItem[_address] = DigitalItem(
-            _tokenId,
-            _tokenName,
-            _tokenURI,
-            _name,
-            _mintedBy,
-            _currentOwner,
-            _previousOwner,
-            _price,
-            _numberOfTransfers,
-            _forSale
-        );
-        digitalItems.push(_address) - 1;
-        // console.log(')
-    }
+    // function setDigitalItem(
+    //     address _address,
+    //     uint256 _tokenId,
+    //     string memory _tokenName,
+    //     string memory _tokenURI,
+    //     string memory _name,
+    //     address _mintedBy,
+    //     address _currentOwner,
+    //     address _previousOwner,
+    //     uint256 _price,
+    //     uint256 _numberOfTransfers,
+    //     bool _forSale
+    // ) internal {
+    //     digitalItem[_address] = DigitalItem(
+    //         _tokenId,
+    //         _tokenName,
+    //         _tokenURI,
+    //         _name,
+    //         _mintedBy,
+    //         _currentOwner,
+    //         _previousOwner,
+    //         _price,
+    //         _numberOfTransfers,
+    //         _forSale
+    //     );
+    //     digitalItems.push(_address) - 1;
+    //     // console.log(')
+    // }
 
     // initialize contract while deployment with contract's collection name and token
     constructor() ERC721("ArtFunds Collection", "AF") {
