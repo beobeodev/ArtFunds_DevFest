@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import './CreateCollectionModal.css'
 import ReactDOM from 'react-dom'
 import ipfsClient from '../../utils/ipfs'
+import ArtFundsStorage from '../../abis/ArtFundsStorage.json'
+import Web3 from 'web3'
 
 const CreateCollectionModal = ({ isShow, onToggle, submitCreate }) => {
   // const [selectedFile, setSelectedFile] = useState()
@@ -12,6 +14,10 @@ const CreateCollectionModal = ({ isShow, onToggle, submitCreate }) => {
     url: null,
     file: null
   })
+
+  const web3 = new Web3(Web3.currentProvider || 'http://localhost:8545')
+
+  const [account, setAccount] = useState(null)
 
   const onSelectImage = async e => {
     if (!e.target.files || e.target.files.length === 0) {
@@ -44,8 +50,36 @@ const CreateCollectionModal = ({ isShow, onToggle, submitCreate }) => {
   const onSubmitForm = async e => {
     e.preventDefault()
     try {
-      const added = await ipfsClient.add(collection.file)
-      const url = `https://ipfs.infura.io/ipfs/${added.path}`
+      await window.ethereum.request({ method: 'eth_accounts' }).then(accounts => {
+        if (accounts.length === 0) {
+          alert('Vui lòng kết nối đến Metamask')
+        } else {
+          setAccount(accounts[0])
+        }
+      })
+
+      if (account) {
+        const networkId = await web3.eth.net.getId()
+        const networkData = ArtFundsStorage.networks[networkId]
+
+        const added = await ipfsClient.add(collection.file)
+        const url = `https://ipfs.infura.io/ipfs/${added.path}`
+
+        const ArtFundsContract = new web3.eth.Contract(
+          ArtFundsStorage.abi,
+          '0xfe0e4Ca51748A2012B0A81D2E695A31D4abe3D1A'
+        )
+        await ArtFundsContract.methods
+          .createCollection(url, collection.name, collection.description)
+          .send({ from: account })
+          .on('confirmation', () => {
+            console.log('success')
+          })
+          .on('error', (err, receipt) => {
+            console.log(err)
+            console.log(receipt)
+          })
+      }
     } catch (error) {
       console.log('Error uploading file: ', error)
     }

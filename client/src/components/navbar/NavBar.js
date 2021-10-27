@@ -5,8 +5,13 @@ import { Link } from 'react-router-dom'
 
 const NavBar = () => {
   const connectWallet = async () => {
-    console.log('Test connect')
-    await window.ethereum.enable()
+    await window.ethereum.request({ method: 'eth_requestAccounts' }).then(accounts => {
+      if (accounts.length === 0) {
+        alert('Vui lòng kết nối đến Metamask')
+      } else {
+        console.log(accounts[0])
+      }
+    })
   }
 
   return (
