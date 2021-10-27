@@ -1,12 +1,8 @@
 //import ERC721 interface
 import "./ERC721.sol";
 
-<<<<<<< HEAD
-// pragma solidity >=0.6.0 <0.8.0;
 pragma abicoder v2;
-=======
 pragma solidity >=0.6.0 <0.8.0;
->>>>>>> 3d70725477a97dfbdce6f3c560fe384da1aff800
 
 //implement
 contract ArtFundsStorage is ERC721 {
@@ -20,16 +16,12 @@ contract ArtFundsStorage is ERC721 {
         string imageURL;
         string name;
         string description;
-        // DigitalItem[] digitalItems;
-        // uint256 collectionPointer;
-        // uint256[] digitalItemKeys;
         mapping(uint256 => DigitalItem) listDigital;
         uint8 listSize;
     }
 
     uint256 collectionCounter = 0;
     mapping(address => Collection[]) public ownerCollections;
-    // mapping(address => Collection) public collectionStructs;
     // uint256[] collections;
 
     struct DigitalItem {
@@ -42,13 +34,10 @@ contract ArtFundsStorage is ERC721 {
         string imageURL;
         uint256 numberOfTransfers;
         bool forSale;
-        // uint256 digitalItemPointer;
-        // uint256 collectionKey;
     }
 
     uint256 digitalItemCounter = 0;
     mapping(address => DigitalItem[]) public ownerDigitalItems;
-    // mapping(address => DigitalItem) public digitalItemStructs;
     // uint256[] digitalItems;
 
     event ItemCreated(
@@ -78,46 +67,6 @@ contract ArtFundsStorage is ERC721 {
         collectionName = name();
         collectionNameSymbol = symbol();
     }
-
-    // uint256 public tokenCounter;
-
-    // function getCollectionDigitalItemsCount(uint256 collectionId)
-    //     public
-    //     constant
-    //     returns (uint256 digitalItemsCount)
-    // {
-    //     if (!isCollection(collectionId)) throw;
-    //     return collectionStructs[collectionId].digitalItemKeys.length;
-    // }
-
-    // function getCollectionDigitalItemsAtIndex(uint256 collectionId, uint256 row)
-    //     public
-    //     constant
-    //     returns (uint256 collectionKey)
-    // {
-    //     if (!isCollection(collectionId)) throw;
-    //     return collectionStructs[collectionId].collectionKeys[row];
-    // }
-
-    // function createDigitalItem(uint256 digitalItemId, uint256 collectionId)
-    //     onlyOwner
-    //     returns (bool success)
-    // {
-    //     if (!isCollection(collectionId)) throw;
-    //     if (isDigitalItem(digitalItemId)) throw;
-    //     digitalItemStructs[digitalItemId].digitalItemPointer =
-    //         digitalItems.push(digitalItemId) -
-    //         1;
-    //     digitalItemStructs[digitalItemId].collectionKey = collectionId;
-
-    //     collectionStructs[collectionId].digitalItemKeyPointers[digitalItemId] =
-    //         collectionStructs[collectionId].digitalItemKeys.push(
-    //             digitalItemId
-    //         ) -
-    //         1;
-    //     LogNewdigitalItem(msg.sender, digitalItemId, collectionId);
-    //     return true;
-    // }
 
     // mint a new digital item
     function mintDigitalItem(
@@ -149,6 +98,41 @@ contract ArtFundsStorage is ERC721 {
             true
         );
         ownerDigitalItems[msg.sender].push(newDigitalItem);
+    }
+
+    function updateCurrentOwnerDigitalItem(
+        address _owner,
+        address payable _newOwner,
+        uint256 _tokenId
+    ) public returns (bool success) {
+        require(_owner != address(0x0));
+        require(_newOwner != address(0x0));
+        require(_tokenId >= 0);
+        DigitalItem storage digitalItem = ownerDigitalItems[_owner][_tokenId];
+        digitalItem.previousOwner = digitalItem.currentOwner;
+        digitalItem.currentOwner = _newOwner;
+        return true;
+    }
+
+    function updateInfoBasicDigitalItem(
+        address _owner,
+        uint256 _tokenId,
+        string memory _name,
+        uint256 _price,
+        string memory _imageURL,
+        uint256 _numberOfTransfers,
+        bool _forSale
+    ) public returns (bool success) {
+        require(_owner != address(0x0));
+        require(_tokenId >= 0);
+        require(ownerDigitalItems[_owner].length > 0);
+        DigitalItem storage digitalItem = ownerDigitalItems[_owner][_tokenId];
+        digitalItem.imageURL = _imageURL;
+        digitalItem.name = _name;
+        digitalItem.price = _price;
+        digitalItem.forSale = _forSale;
+        digitalItem.numberOfTransfers = _numberOfTransfers;
+        return true;
     }
 
     function getDigitalItem(uint256 _tokenId, address _owner)
@@ -192,34 +176,38 @@ contract ArtFundsStorage is ERC721 {
         string memory _imageURL,
         string memory _name,
         string memory _description
-    ) public {
+    ) public returns (bool success) {
         collectionCounter++;
-
-        // DigitalItem[] memory temp;
-
-        Collection storage collection = ownerCollections[msg.sender][collectionCounter];
+        Collection storage collection = ownerCollections[msg.sender][
+            collectionCounter
+        ];
         collection.tokenId = collectionCounter;
         collection.imageURL = _imageURL;
         collection.name = _name;
         collection.description = _description;
         collection.listSize = 0;
-        // Collection(
-        //     collectionCounter,
-        //     _imageURL,
-        //     _name,
-        //     _description
-        // );
 
         // ownerCollections[msg.sender].push(collection);
-        
+
         emit CollectionCreated(
-          collectionCounter,
-          _imageURL,
-          _name,
-          msg.sender,
-          _description
+            collectionCounter,
+            _imageURL,
+            _name,
+            msg.sender,
+            _description
         );
+        return true;
     }
+
+    // function getCollections(address _owner)
+    //     public
+    //     view
+    //     returns (Collection[] memory)
+    // {
+    //     require(_owner != address(0x0));
+    //     require(ownerCollections[_owner].length > 0);
+    //     return ownerCollections[_owner];
+    // }
 
     function getCollection(uint256 _tokenId, address _owner)
         public
@@ -236,6 +224,36 @@ contract ArtFundsStorage is ERC721 {
         Collection storage collection = ownerCollections[_owner][_tokenId];
 
         return (collection.imageURL, collection.name, collection.description);
+    }
+
+    function updateCollection(
+        uint256 _tokenId,
+        string memory _imageURL,
+        string memory _name,
+        string memory _description,
+        address _owner
+    ) public returns (bool success) {
+        require(_owner != address(0x0));
+        require(_tokenId >= 0);
+        require(ownerCollections[_owner].length > 0);
+        Collection storage collection = ownerCollections[_owner][_tokenId];
+        collection.imageURL = _imageURL;
+        collection.name = _name;
+        collection.description = _description;
+        return true;
+    }
+
+    function deleteCollection(address _owner, uint256 _tokenId)
+        public
+        returns (bool success)
+    {
+        require(_owner != address(0x0));
+        require(_tokenId >= 0);
+        require(ownerCollections[_owner].length > 0);
+        // uint256 rowToDelete = ownerCollections[_owner][_tokenId].index;
+        delete ownerCollections[_owner][_tokenId];
+        collectionCounter--;
+        return true;
     }
 
     function getCollectionCount(address _owner) public view returns (uint256) {
