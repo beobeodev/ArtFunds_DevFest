@@ -1,12 +1,8 @@
 //import ERC721 interface
 import "./ERC721.sol";
 
-<<<<<<< HEAD
 // pragma solidity >=0.6.0 <0.8.0;
 pragma abicoder v2;
-=======
-pragma solidity >=0.6.0 <0.8.0;
->>>>>>> 83c1e34ae4bcfd109fa901c950904729d64a053d
 
 //implement
 contract ArtFundsStorage is ERC721 {
