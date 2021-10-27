@@ -45,12 +45,12 @@ const NavBar = () => {
               </a>
               <ul>
                 <li>
-                  <Link to='/mycollection' className='dropdown_account'>
+                  <Link to='/' className='dropdown_account'>
                     Hồ sơ của tôi
                   </Link>
                 </li>
                 <li>
-                  <a href='/mycollection.html'>Bộ sưu tập của tôi</a>
+                  <a href='/mycollection'>Bộ sưu tập của tôi</a>
                 </li>
                 <li>
                   <a href='/creatcollection.html'>Tạo bộ sưu tập mới</a>

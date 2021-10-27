@@ -26,7 +26,7 @@ const CreateCollectionModal = ({ isShow, onToggle, submitCreate }) => {
     setCollection(prevCollection => ({
       ...prevCollection,
       url: objectUrl,
-      file: file,
+      file: file
     }))
 
     // I've kept this example simple by using the first image instead of multiple
@@ -41,12 +41,11 @@ const CreateCollectionModal = ({ isShow, onToggle, submitCreate }) => {
     // console.log(collection)
   }
 
-  const onSubmitForm = async (e) => {
+  const onSubmitForm = async e => {
     e.preventDefault()
     try {
       const added = await ipfsClient.add(collection.file)
       const url = `https://ipfs.infura.io/ipfs/${added.path}`
-      
     } catch (error) {
       console.log('Error uploading file: ', error)
     }
@@ -58,12 +57,23 @@ const CreateCollectionModal = ({ isShow, onToggle, submitCreate }) => {
         <form action='' className='modal-content' onSubmit={onSubmitForm}>
           <div className='modal_header'>
             <button type='button' className='modal_close' onClick={onToggle}>
-              <span aria-hidden='true'>&times;</span>
+              <span className='close'>&times;</span>
             </button>
           </div>
           <h1>Tạo bộ sưu tập mới của bạn</h1>
-          {collection.url && <img src={collection.url} />}
-          <input type='file' name='logo' id='logo' onChange={onSelectImage} />
+          <label for='logo'>Logo</label>
+          {/* <input type='file' name='logo' id='logo' onChange={onSelectImage} /> */}
+          {collection.url ? (
+            <img src={collection.url} className='collection_image' alt='logo' />
+          ) : (
+            <div className='input-file-container' onChange={onSelectImage}>
+              <input className='input-file' id='my-file' type='file' />
+              <label tabIndex='0' htmlFor='my-file' className='input-file-trigger'>
+                Tải ảnh lên
+              </label>
+              <p className='file-return'></p>
+            </div>
+          )}
           <label htmlFor='name'>Tên bộ sưu tập</label>
           <input type='text' name='name' id='nameCollection' onChange={handleChange} />
           <label htmlFor='discript'>Mô tả</label>

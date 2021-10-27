@@ -1,9 +1,95 @@
+button {
+  font-size: 16px;
+}
+
+.btn-dark {
+  background: #333;
+  color: #f4f4f4f4;
+  border: 1px solid #333;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.my-collection {
+  width: 80vw;
+}
+.my-collection h1 {
+  padding-top: 12px;
+}
+
+.my-collection p {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.my-collection .container-title {
+  text-align: center;
+}
+
+.my-collection .container {
+  margin: 100px 0 0 0;
+}
+
+.new-collection {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  padding-left: 2.5rem;
+}
+
+/* Grid for created collections */
+
+.container-collection {
+  margin-top: 12px;
+}
+
+.collection {
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  columns: 5 300px;
+  column-gap: 1.5rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.collection .wrapped {
+  width: 150px;
+  padding: 1rem;
+  margin: 0 1.5rem 1.5rem 0;
+  display: inline-block;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.3s ease-in-out;
+}
+.collection .wrapped:hover {
+  transform: scale(0.9);
+  box-shadow: 2px 5px 5px 5px rgba(0, 0, 0, 0.5);
+}
+
+.collection_image {
+  width: 100%;
+}
+
+.collection .wrapped img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.collection #title {
+  margin: 5px 0;
+  padding: 0;
+  text-align: center;
+  text-transform: capitalize;
+  font-size: 12px;
+}
+
+/* The Modal (background) */
 .modal {
-  /* display: none; Hidden by default */
   display: block;
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
-  padding-top: 60px; /* Location of the box */
+  padding-top: 50px; /* Location of the box */
   left: 0;
   top: 0;
   font-size: 20px;
@@ -14,60 +100,50 @@
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
-input,
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  padding: 20px 40px;
+  border: 1px solid #888;
+  border-radius: 10px;
+  width: 600px;
+  max-height: fit-content;
+  font-size: 16px;
+  position: relative;
+}
+
 label {
   display: block;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding: 10px;
   width: 100%;
-  height: 100%;
+  font-weight: bold;
+  margin-bottom: -5px;
 }
 
 input,
 textarea {
-  padding: 15px;
   width: 100%;
-  cursor: pointer;
-}
-
-input[type='file'] {
-  padding-left: 0;
-}
-
-.modal button {
-  margin-top: 15px;
-  margin-left: 42%;
-}
-
-/* Modal Content */
-.modal-content {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 30px;
-  border: 1px solid #888;
-  width: 30%;
+  height: 100%;
+  padding: 10px;
+  margin-top: 5px;
   font-size: 16px;
+  font-weight: normal;
+  max-height: 100px;
 }
 
 .modal-content h1 {
   font-size: 20px;
+  text-transform: uppercase;
   text-align: center;
+  margin-top: 10px;
 }
 
+.modal-content button {
+  width: 100%;
+  margin-top: 15px;
+  font-size: 20px;
+}
 /* The Close Button */
-.close {
-  color: #aaaaaa;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-
 .modal_header {
   display: flex;
   justify-content: flex-end;
@@ -84,6 +160,79 @@ input[type='file'] {
   border: none;
 }
 
-img {
-  width: 100%;
+.close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  color: #aaaaaa;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Image Upload */
+.input-file-container {
+  position: relative;
+  width: 225px;
+}
+
+.input-file-container input[type='file'] {
+  margin-top: 20px;
+}
+
+.input-file-trigger {
+  text-align: center;
+}
+
+.input-file-trigger {
+  display: block;
+  padding: 30px 45px;
+  border: 1px dotted #000;
+  /* margin-top: 20px; */
+  color: #333;
+  font-size: 1em;
+  transition: all 0.4s;
+  cursor: pointer;
+}
+.input-file {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 225px;
+  opacity: 0;
+  padding: 40px 0;
+  cursor: pointer;
+}
+/* .js .input-file:hover + .input-file-trigger,
+.js .input-file:focus + .input-file-trigger,
+.js .input-file-trigger:hover,
+.js .input-file-trigger:focus {
+  border: 1px dotted #000;
+  background: #39d2b4;
+  color: #333;
+} */
+
+.file-return {
+  margin: 0;
+}
+.file-return:not(:empty) {
+  margin: 1em 0;
+  margin-left: -60px;
+}
+.file-return {
+  font-style: italic;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+.file-return:not(:empty):before {
+  content: 'File đã chọn: ';
+  padding: auto;
+  font-style: normal;
+  font-weight: normal;
 }

@@ -1,8 +1,12 @@
 //import ERC721 interface
 import "./ERC721.sol";
 
+<<<<<<< HEAD
 // pragma solidity >=0.6.0 <0.8.0;
 pragma abicoder v2;
+=======
+pragma solidity >=0.6.0 <0.8.0;
+>>>>>>> 3d70725477a97dfbdce6f3c560fe384da1aff800
 
 //implement
 contract ArtFundsStorage is ERC721 {
@@ -19,7 +23,8 @@ contract ArtFundsStorage is ERC721 {
         // DigitalItem[] digitalItems;
         // uint256 collectionPointer;
         // uint256[] digitalItemKeys;
-        // mapping(uint256 => uint256) digitalItemKeyPointers;
+        mapping(uint256 => DigitalItem) listDigital;
+        uint8 listSize;
     }
 
     uint256 collectionCounter = 0;
@@ -182,26 +187,37 @@ contract ArtFundsStorage is ERC721 {
         return ownerDigitalItems[_owner].length;
     }
 
+    //This function to create collection from address
     function createCollection(
-        address _address,
         string memory _imageURL,
         string memory _name,
         string memory _description
     ) public {
         collectionCounter++;
-        Collection memory collection = Collection(
-            collectionCounter,
-            _imageURL,
-            _name,
-            _description
-        );
-        ownerCollections[msg.sender].push(collection);
+
+        // DigitalItem[] memory temp;
+
+        Collection storage collection = ownerCollections[msg.sender][collectionCounter];
+        collection.tokenId = collectionCounter;
+        collection.imageURL = _imageURL;
+        collection.name = _name;
+        collection.description = _description;
+        collection.listSize = 0;
+        // Collection(
+        //     collectionCounter,
+        //     _imageURL,
+        //     _name,
+        //     _description
+        // );
+
+        // ownerCollections[msg.sender].push(collection);
+        
         emit CollectionCreated(
-            collectionCounter,
-            _imageURL,
-            _name,
-            msg.sender,
-            _description
+          collectionCounter,
+          _imageURL,
+          _name,
+          msg.sender,
+          _description
         );
     }
 
