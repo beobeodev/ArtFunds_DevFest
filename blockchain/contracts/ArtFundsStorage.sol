@@ -11,32 +11,52 @@ contract ArtFundsStorage is ERC721 {
     string public collectionNameSymbol;
 
     struct DigitalItem {
-        uint256 tokenId;
-        string name;
-        address payable mintedBy;
-        address payable currentOwner;
-        address payable previousOwner;
-        uint256 price;
-        uint256 numberOfTransfers;
-        bool forSale;
+      uint256 itemId;
+      string name;
+      address payable mintedBy;
+      address payable currentOwner;
+      address payable previousOwner;
+      uint256 price;
+      uint256 numberOfTransfers;
+      bool forSale;
     }
 
     struct Collection {
-        uint256 tokenId;
-        string name;
-        uint256 digitalItemCount;
-        DigitalItem[] digitalItems;
+      uint256 collectionId;
+      string name;
+      uint256 digitalItemCount;
+      DigitalItem[] digitalItems;
     }
-    // A dynamically-sized array of `Collection` structs.
-    Collection[] public collections;
-    DigitalItem[] public digitalItems;
+
+    //total number of collection created
+    uint256 public collectionCounter;
+    //total number of item minted
+    uint256 public itemCounter;
+    
+    // // A dynamically-sized array of `Collection` structs.
+    // Collection[] public collections;
+    // DigitalItem[] public digitalItems;
 
     struct Order {
-        address maker;
-        address taker;
-        uint256 tokenId;
+      address maker;
+      address taker;
+      uint256 tokenId;
     }
+    
+    // map token id to DigitalItem
+    mapping(uint256 => DigitalItem) public allDigitalItems;
+    // map token id to Collection
+    mapping(uint256 => Collection) public allCollections;
+
     mapping(uint256 => Order) orders;
+
+    //This funtcion to create collection 
+    function createCollection(string _name, string ) external {
+      ++collectionCounter;
+      allCollections[collectionCounter] = Collection(
+        
+      )
+    }
 
     function makeOrder(uint256 _tokenId, uint256 _price) external {
         // validate nft
@@ -50,9 +70,7 @@ contract ArtFundsStorage is ERC721 {
         // transfer nft
     }
 
-    // map cryptoboy's token id to crypto boy
-    mapping(uint256 => DigitalItem) public allDigitalItems;
-    mapping(uint256 => Collection) public allCollections;
+    
     // check if token name exists
     mapping(string => bool) public tokenNameExists;
     mapping(string => bool) public tokenURIExists;
@@ -92,7 +110,7 @@ contract ArtFundsStorage is ERC721 {
 
     // initialize contract while deployment with contract's collection name and token
     constructor() ERC721("ArtFunds Collection", "AF") {
-        collectionName = name();
-        collectionNameSymbol = symbol();
+      collectionName = name();
+      collectionNameSymbol = symbol();
     }
 }
