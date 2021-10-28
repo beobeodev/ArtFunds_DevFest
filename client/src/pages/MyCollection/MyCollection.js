@@ -34,11 +34,14 @@ const MyCollection = () => {
       }
     })
 
-    const ArtFundsContract = new web3.eth.Contract(ArtFundsStorage.abi, '0xfe0e4Ca51748A2012B0A81D2E695A31D4abe3D1A')
+    const ArtFundsContract = new web3.eth.Contract(ArtFundsStorage.abi, '0x55aca21cF1ff34AEB25D90Ec6B4Cfc4ee68ab9D2')
 
-    await ArtFundsContract.methods.collectionCounter.call((err, res) => {
-      console.log(res)
-      console.log(err)
+
+    const count = await ArtFundsContract.methods.collectionCounter().call()
+    console.log({count})
+
+    ArtFundsContract.methods.collectionCounter().call((err, res) => {
+      console.log('err, res', err, res)
     })
     // console.log(count)
   }
