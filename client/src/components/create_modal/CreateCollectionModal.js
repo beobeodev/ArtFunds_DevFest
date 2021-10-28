@@ -69,7 +69,7 @@ const CreateCollectionModal = ({ isShow, onToggle, submitCreate }) => {
       if (account) {
         const networkId = await web3.eth.net.getId();
         const networkData = ArtFundsStorage.networks[networkId];
-        // console.log(networkId)
+        console.log(networkId);
         if (networkData) {
           const ArtFundsContract = new web3.eth.Contract(
             ArtFundsStorage.abi,

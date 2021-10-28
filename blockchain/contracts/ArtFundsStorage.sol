@@ -16,8 +16,6 @@ contract ArtFundsStorage is ERC721 {
         string imageURL;
         string name;
         string description;
-        mapping(uint256 => DigitalItem) listDigital;
-        uint8 listSize;
     }
 
     uint256 public collectionCounter = 0;
@@ -26,6 +24,7 @@ contract ArtFundsStorage is ERC721 {
 
     struct DigitalItem {
         uint256 tokenId;
+        uint256 collectionID;
         string name;
         address payable mintedBy;
         address payable currentOwner;
@@ -69,107 +68,107 @@ contract ArtFundsStorage is ERC721 {
     }
 
     // mint a new digital item
-    function mintDigitalItem(
-        string memory _name,
-        uint256 _price,
-        string memory _imageURL,
-        uint256 _numberOfTransfers,
-        bool _forSale
-    ) external {
-        // check if thic fucntion caller is not an zero address account
-        require(msg.sender != address(0));
-        // increment counter
-        digitalItemCounter++;
-        // check if a token exists with the above token id => incremented counter
-        require(!_exists(digitalItemCounter));
+    // function mintDigitalItem(
+    //     string memory _name,
+    //     uint256 _price,
+    //     string memory _imageURL,
+    //     uint256 _numberOfTransfers,
+    //     bool _forSale
+    // ) external {
+    //     // check if thic fucntion caller is not an zero address account
+    //     require(msg.sender != address(0));
+    //     // increment counter
+    //     digitalItemCounter++;
+    //     // check if a token exists with the above token id => incremented counter
+    //     require(!_exists(digitalItemCounter));
 
-        // mint the token
-        _mint(msg.sender, digitalItemCounter);
+    //     // mint the token
+    //     _mint(msg.sender, digitalItemCounter);
 
-        DigitalItem memory newDigitalItem = DigitalItem(
-            digitalItemCounter,
-            _name,
-            msg.sender,
-            msg.sender,
-            msg.sender,
-            _price,
-            _imageURL,
-            0,
-            true
-        );
-        ownerDigitalItems[msg.sender].push(newDigitalItem);
-    }
+    //     DigitalItem memory newDigitalItem = DigitalItem(
+    //         digitalItemCounter,
+    //         _name,
+    //         msg.sender,
+    //         msg.sender,
+    //         msg.sender,
+    //         _price,
+    //         _imageURL,
+    //         0,
+    //         true
+    //     );
+    //     ownerDigitalItems[msg.sender].push(newDigitalItem);
+    // }
 
-    function updateCurrentOwnerDigitalItem(
-        address _owner,
-        address payable _newOwner,
-        uint256 _tokenId
-    ) public returns (bool success) {
-        require(_owner != address(0x0));
-        require(_newOwner != address(0x0));
-        require(_tokenId >= 0);
-        DigitalItem storage digitalItem = ownerDigitalItems[_owner][_tokenId];
-        digitalItem.previousOwner = digitalItem.currentOwner;
-        digitalItem.currentOwner = _newOwner;
-        return true;
-    }
+    // function updateCurrentOwnerDigitalItem(
+    //     address _owner,
+    //     address payable _newOwner,
+    //     uint256 _tokenId
+    // ) public returns (bool success) {
+    //     require(_owner != address(0x0));
+    //     require(_newOwner != address(0x0));
+    //     require(_tokenId >= 0);
+    //     DigitalItem storage digitalItem = ownerDigitalItems[_owner][_tokenId];
+    //     digitalItem.previousOwner = digitalItem.currentOwner;
+    //     digitalItem.currentOwner = _newOwner;
+    //     return true;
+    // }
 
-    function updateInfoBasicDigitalItem(
-        address _owner,
-        uint256 _tokenId,
-        string memory _name,
-        uint256 _price,
-        string memory _imageURL,
-        uint256 _numberOfTransfers,
-        bool _forSale
-    ) public returns (bool success) {
-        require(_owner != address(0x0));
-        require(_tokenId >= 0);
-        require(ownerDigitalItems[_owner].length > 0);
-        DigitalItem storage digitalItem = ownerDigitalItems[_owner][_tokenId];
-        digitalItem.imageURL = _imageURL;
-        digitalItem.name = _name;
-        digitalItem.price = _price;
-        digitalItem.forSale = _forSale;
-        digitalItem.numberOfTransfers = _numberOfTransfers;
-        return true;
-    }
+    // function updateInfoBasicDigitalItem(
+    //     address _owner,
+    //     uint256 _tokenId,
+    //     string memory _name,
+    //     uint256 _price,
+    //     string memory _imageURL,
+    //     uint256 _numberOfTransfers,
+    //     bool _forSale
+    // ) public returns (bool success) {
+    //     require(_owner != address(0x0));
+    //     require(_tokenId >= 0);
+    //     require(ownerDigitalItems[_owner].length > 0);
+    //     DigitalItem storage digitalItem = ownerDigitalItems[_owner][_tokenId];
+    //     digitalItem.imageURL = _imageURL;
+    //     digitalItem.name = _name;
+    //     digitalItem.price = _price;
+    //     digitalItem.forSale = _forSale;
+    //     digitalItem.numberOfTransfers = _numberOfTransfers;
+    //     return true;
+    // }
 
-    function getDigitalItem(uint256 _tokenId, address _owner)
-        public
-        view
-        returns (
-            string memory _name,
-            address _mintedBy,
-            address _currentOwner,
-            address _previousOwner,
-            uint256 _price,
-            string memory _imageURL,
-            uint256 _numberOfTransfers,
-            bool _forSale
-        )
-    {
-        require(_owner != address(0x0));
-        require(_tokenId >= 0);
-        require(ownerDigitalItems[_owner].length > 0);
-        DigitalItem storage digitalItem = ownerDigitalItems[_owner][_tokenId];
+    // function getDigitalItem(uint256 _tokenId, address _owner)
+    //     public
+    //     view
+    //     returns (
+    //         string memory _name,
+    //         address _mintedBy,
+    //         address _currentOwner,
+    //         address _previousOwner,
+    //         uint256 _price,
+    //         string memory _imageURL,
+    //         uint256 _numberOfTransfers,
+    //         bool _forSale
+    //     )
+    // {
+    //     require(_owner != address(0x0));
+    //     require(_tokenId >= 0);
+    //     require(ownerDigitalItems[_owner].length > 0);
+    //     DigitalItem storage digitalItem = ownerDigitalItems[_owner][_tokenId];
 
-        return (
-            digitalItem.name,
-            digitalItem.mintedBy,
-            digitalItem.currentOwner,
-            digitalItem.previousOwner,
-            digitalItem.price,
-            digitalItem.imageURL,
-            digitalItem.numberOfTransfers,
-            digitalItem.forSale
-        );
-    }
+    //     return (
+    //         digitalItem.name,
+    //         digitalItem.mintedBy,
+    //         digitalItem.currentOwner,
+    //         digitalItem.previousOwner,
+    //         digitalItem.price,
+    //         digitalItem.imageURL,
+    //         digitalItem.numberOfTransfers,
+    //         digitalItem.forSale
+    //     );
+    // }
 
-    function getDigitalItemCount(address _owner) public view returns (uint256) {
-        require(_owner != address(0x0));
-        return ownerDigitalItems[_owner].length;
-    }
+    // function getDigitalItemCount(address _owner) public view returns (uint256) {
+    //     require(_owner != address(0x0));
+    //     return ownerDigitalItems[_owner].length;
+    // }
 
     //This function to create collection from address
     function createCollection(
@@ -178,18 +177,22 @@ contract ArtFundsStorage is ERC721 {
         string memory _description
     ) public returns (bool success) {
         collectionCounter++;
-        Collection storage collection = ownerCollections[msg.sender][
-            collectionCounter
-        ];
-        collection.tokenId = collectionCounter;
-        collection.imageURL = _imageURL;
-        collection.name = _name;
-        collection.description = _description;
-        collection.listSize = 0;
-
+        Collection memory collection = Collection(
+            collectionCounter,
+            _imageURL,
+            _name,
+            _description
+        );
+        // ownerDigitalItems[msg.sender].push(newDigitalItem);
+        // collection.tokenId = collectionCounter;
+        // collection.imageURL = _imageURL;
+        // collection.name = _name;
+        // collection.description = _description;
+        // collection.listSize = 0;
+        ownerCollections[msg.sender].push(collection);
         // ownerCollections[msg.sender].push(collection);
 
-        emit CollectionCreated( 
+        emit CollectionCreated(
             collectionCounter,
             _imageURL,
             _name,
@@ -259,11 +262,11 @@ contract ArtFundsStorage is ERC721 {
     function getCollectionCount(address _owner)
         public
         view
-        returns (uint256)
+        returns (uint256 count)
     {
         require(_owner != address(0x0));
         return (collectionCounter);
-        // return (ownerCollections[_owner].length);
+        // return ownerCollections[_owner].length;
     }
 
     struct Order {
