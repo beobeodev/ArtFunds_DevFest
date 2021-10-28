@@ -266,11 +266,11 @@ contract ArtFundsStorage is ERC721 {
         return (ownerCollections[_owner].length);
     }
 
-    // struct Order {
-    //     address maker;
-    //     address taker;
-    //     uint256 tokenId;
-    // }
+    struct Order {
+        address maker;
+        address taker;
+        uint256 tokenId;
+    }
 
     // mapping(uint256 => Order) orders;
 
