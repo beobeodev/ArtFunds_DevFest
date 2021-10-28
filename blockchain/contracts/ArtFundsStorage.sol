@@ -276,17 +276,19 @@ contract ArtFundsStorage is ERC721 {
         uint256 tokenId;
     }
 
-    // mapping(uint256 => Order) orders;
+    mapping(uint256 => Order) orders;
 
-    // function makeOrder(uint256 _tokenId, uint256 _price) external {
-    //     // validate nft
-    //     // ...
-    // }
+    function makeOrder(uint256 _tokenId, uint256 _price) external {
+        require(_tokenId >= 0);
+        // require(condition);
+        // validate nft
+        // ...
+    }
 
-    // function takeOrder(uint256 _tokenId) external {
-    //     // check order exists
-    //     // validate funds
-    //     // transfer funds
-    //     // transfer nft
-    // }
+    function takeOrder(uint256 _tokenId) external {
+        // check order exists
+        // validate funds
+        // transfer funds
+        // transfer nft
+    }
 }
