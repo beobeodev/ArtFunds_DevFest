@@ -189,7 +189,7 @@ contract ArtFundsStorage is ERC721 {
 
         // ownerCollections[msg.sender].push(collection);
 
-        emit CollectionCreated(
+        emit CollectionCreated( 
             collectionCounter,
             _imageURL,
             _name,
@@ -226,9 +226,6 @@ contract ArtFundsStorage is ERC721 {
         return (collection.imageURL, collection.name, collection.description);
     }
 
-<<<<<<< HEAD
-    function getCollectionCount(address _owner) public view returns (uint256 count) {
-=======
     function updateCollection(
         uint256 _tokenId,
         string memory _imageURL,
@@ -260,10 +257,16 @@ contract ArtFundsStorage is ERC721 {
     }
 
     function getCollectionCount(address _owner) public view returns (uint256) {
->>>>>>> 4513547c9103a630b6245818b37020da7a1f718e
         require(_owner != address(0x0));
         return (collectionCounter);
         // return ownerCollections[_owner].length;
+    }
+
+
+    // get total number of tokens owned by an address
+    function getTotalNumberOfTokensOwnedByAnAddress(address _owner) public view returns(uint256) {
+        uint256 totalNumberOfTokensOwned = balanceOf(_owner);
+        return totalNumberOfTokensOwned;
     }
 
     // struct Order {

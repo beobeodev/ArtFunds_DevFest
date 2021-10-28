@@ -33,14 +33,13 @@ const MyCollection = () => {
         account = accounts[0]
       }
     })
+    console.log(account)
+    const ArtFundsContract = new web3.eth.Contract(ArtFundsStorage.abi, account)
 
-    const ArtFundsContract = new web3.eth.Contract(ArtFundsStorage.abi, '0xfe0e4Ca51748A2012B0A81D2E695A31D4abe3D1A')
-
-    await ArtFundsContract.methods.collectionCounter.call((err, res) => {
-      console.log(res)
-      console.log(err)
-    })
-    // console.log(count)
+    // let totalTokensOwnedByAccount = await ArtFundsContract.methods.ownerCollections(account, 1).call()
+    // console.log(totalTokensOwnedByAccount)
+    const count = await ArtFundsContract.methods.collectionCounter().call()
+    console.log({ count })
   }
 
   return (

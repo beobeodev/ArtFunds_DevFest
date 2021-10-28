@@ -70,20 +70,16 @@ const CreateCollectionModal = ({ isShow, onToggle, submitCreate }) => {
           ArtFundsStorage.abi,
           '0xfe0e4Ca51748A2012B0A81D2E695A31D4abe3D1A'
         )
-        // await ArtFundsContract.methods
-        //   .createCollection(url, collection.name, collection.description)
-        //   .send({ from: account })
-        //   .on('confirmation', (confNumber, receipt, latestBlockHash) => {
-        //     console.log(receipt)
-        //   })
-        //   .on('error', (err, receipt) => {
-        //     console.log(err)
-        //     console.log(receipt)
-        //   })
-        let count = await ArtFundsContract.methods.getCollectionCount(account).call((err, res) => {
-          console.log(res)
-        })
-        console.log(count)
+        await ArtFundsContract.methods
+          .createCollection(url, collection.name, collection.description)
+          .send({ from: account })
+          .on('confirmation', (confNumber, receipt, latestBlockHash) => {
+            console.log(receipt)
+          })
+          .on('error', (err, receipt) => {
+            console.log(err)
+            console.log(receipt)
+          })
       }
     } catch (error) {
       console.log('Error uploading file: ', error)
