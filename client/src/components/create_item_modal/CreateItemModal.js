@@ -1,21 +1,22 @@
 import React, { useState } from 'react'
-import './CreateCollectionModal.css'
 import ReactDOM from 'react-dom'
+import './CreateItemModal.css'
 import ipfsClient from '../../utils/ipfs'
 import ArtFundsStorage from '../../abis/ArtFundsStorage.json'
-// import Web3 from 'web3'
+import Web3 from 'web3'
 
-const CreateCollectionModal = ({ isShow, onToggle }) => {
-  // const [selectedFile, setSelectedFile] = useState()
-  // const [preview, setPreview] = useState()
-  const [collection, setCollection] = useState({
+const CreateItemModal = ({ isShow, onToggle, idCollection }) => {
+  const [item, setItem] = useState({
     name: '',
+    price: null,
+    technique: '',
+    material: '',
+    color: '',
+    field: '',
+    imageURL: '',
     description: '',
-    url: null,
     file: null
   })
-
-  // const web3 = new Web3(Web3.currentProvider || 'http://localhost:8545')
 
   const [account, setAccount] = useState(null)
 
@@ -29,8 +30,8 @@ const CreateCollectionModal = ({ isShow, onToggle }) => {
 
     // console.log(Buffer(reader.result))
     // console.log(objectUrl)
-    setCollection(prevCollection => ({
-      ...prevCollection,
+    setItem(prevItem => ({
+      ...prevItem,
       url: objectUrl,
       file: file
     }))
@@ -39,25 +40,9 @@ const CreateCollectionModal = ({ isShow, onToggle }) => {
     // setSelectedFile(e.target.files[0])
   }
 
-  const handleChange = e => {
-    setCollection({
-      ...collection,
-      [e.target.name]: e.target.value
-    })
-    // console.log(collection)
-  }
-
   const onSubmitForm = async e => {
     e.preventDefault()
     try {
-      // await window.ethereum.request({ method: 'eth_accounts' }).then(accounts => {
-      //   if (accounts.length === 0) {
-      //     alert('Vui lòng kết nối đến Metamask')
-      //   } else {
-      //     setAccount(accounts[0])
-      //   }
-      // })
-
       const web3 = window.web3
       const accounts = await web3.eth.getAccounts()
       if (accounts.length === 0) {
@@ -69,20 +54,37 @@ const CreateCollectionModal = ({ isShow, onToggle }) => {
       if (account) {
         const networkId = await web3.eth.net.getId()
         const networkData = ArtFundsStorage.networks[networkId]
-        console.log(networkId)
         if (networkData) {
+          // console.log(networkId)
           const ArtFundsContract = new web3.eth.Contract(ArtFundsStorage.abi, networkData.address)
-          console.log(networkData.address)
-          const added = await ipfsClient.add(collection.file)
+          // console.log(networkData.address)
+
+          const added = await ipfsClient.add(item.file)
           const url = `https://ipfs.infura.io/ipfs/${added.path}`
+
+          const itemObject = {
+            name: item.name,
+            price: Number(item.price),
+            technique: item.technique,
+            material: item.material,
+            color: item.color,
+            field: item.field,
+            imageURL: url,
+            description: item.description
+          }
+
+          const cid = await ipfsClient.add(JSON.stringify(itemObject))
+          let itemURL = `https://ipfs.infura.io/ipfs/${cid.path}`
 
           // await ArtFundsContract.methods
           //   .createCollection(url, collection.name, collection.description)
           //   .estimateGas({ from: account }, (err, gasAmount) => {
           //     console.log(gasAmount)
           //   })
+          const price = web3.utils.toWei(item.price.toString(), 'Ether')
+          // console.log(price)
           await ArtFundsContract.methods
-            .createCollection(url, collection.name, collection.description)
+            .mintDigitalItem(Number(idCollection), item.name, price, itemURL, true)
             .send({ from: account })
             .on('confirmation', (confNumber, receipt, latestBlockHash) => {
               console.log(receipt)
@@ -94,25 +96,41 @@ const CreateCollectionModal = ({ isShow, onToggle }) => {
           window.location.reload()
         }
       }
-    } catch (error) {
-      console.log('Error uploading file: ', error)
+    } catch (err) {
+      console.log('Error create file: ', err)
     }
+  }
+
+  const handleChange = e => {
+    setItem({
+      ...item,
+      [e.target.name]: e.target.value
+    })
   }
 
   if (isShow) {
     return ReactDOM.createPortal(
-      <div className='modal'>
-        <form action='' className='modal-content' onSubmit={onSubmitForm}>
-          <div className='modal_header'>
-            <button type='button' className='modal_close' onClick={onToggle}>
-              <span className='close'>&times;</span>
-            </button>
-          </div>
-          <h1>Tạo bộ sưu tập mới của bạn</h1>
+      <div id='modal' className='itemModal'>
+        <form className='modal-content' onSubmit={onSubmitForm}>
+          <h1>Thêm NFT mới</h1>
+          <button type='button' className='modal_close' onClick={onToggle}>
+            <span className='close'>&times;</span>
+          </button>
+          <label htmlFor='name'>Tên của NFT</label>
+          <input type='text' name='name' id='nameCollection' onChange={handleChange} />
+          <label htmlFor='price'>Giá</label>
+          <input name='price' id='price' onChange={handleChange} />
+          <label htmlFor='technical'>Kỹ thuật</label>
+          <input type='text' id='technique' name='technique' onChange={handleChange} />
+          <label htmlFor='material'>Vật liệu</label>
+          <input type='text' id='material' name='material' onChange={handleChange} />
+          <label htmlFor='color'>Màu vẽ - Chất liệu</label>
+          <input type='text' id='color' name='color' onChange={handleChange} />
+          <label htmlFor='style'>Trường phái</label>
+          <input type='text' id='style' name='field' onChange={handleChange} />
           <label htmlFor='logo'>Logo</label>
-          {/* <input type='file' name='logo' id='logo' onChange={onSelectImage} /> */}
-          {collection.url ? (
-            <img src={collection.url} className='collection_image' alt='logo' />
+          {item.url ? (
+            <img src={item.url} className='collection_image' alt='logo' />
           ) : (
             <div className='input-file-container' onChange={onSelectImage}>
               <input className='input-file' id='my-file' type='file' />
@@ -122,8 +140,6 @@ const CreateCollectionModal = ({ isShow, onToggle }) => {
               <p className='file-return'></p>
             </div>
           )}
-          <label htmlFor='name'>Tên bộ sưu tập</label>
-          <input type='text' name='name' id='nameCollection' onChange={handleChange} />
           <label htmlFor='discript'>Mô tả</label>
           <textarea name='description' id='discript' cols='30' rows='10' onChange={handleChange}></textarea>
           <button type='submit' className='btn-dark'>
@@ -133,8 +149,9 @@ const CreateCollectionModal = ({ isShow, onToggle }) => {
       </div>,
       document.body
     )
+  } else {
+    return null
   }
-  return null
 }
 
-export default CreateCollectionModal
+export default CreateItemModal

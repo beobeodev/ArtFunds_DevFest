@@ -80,8 +80,11 @@ button {
   font-size: 12px;
 }
 
+.collection_image {
+  width: 100%;
+}
 /* The Modal (background) */
-.modal {
+.itemModal {
   display: block; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -106,6 +109,16 @@ button {
   max-height: fit-content;
   font-size: 16px;
   position: relative;
+}
+
+.modal_close {
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  opacity: 0.3;
+  cursor: pointer;
+  border: none;
 }
 
 label {
