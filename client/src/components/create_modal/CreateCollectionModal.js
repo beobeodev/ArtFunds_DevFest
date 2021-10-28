@@ -15,7 +15,7 @@ const CreateCollectionModal = ({ isShow, onToggle, submitCreate }) => {
     file: null,
   });
 
-  const web3 = new Web3(Web3.currentProvider || "http://localhost:8545");
+  // const web3 = new Web3(Web3.currentProvider || 'http://localhost:8545')
 
   const [account, setAccount] = useState(null);
 
@@ -50,41 +50,46 @@ const CreateCollectionModal = ({ isShow, onToggle, submitCreate }) => {
   const onSubmitForm = async (e) => {
     e.preventDefault();
     try {
-      await window.ethereum
-        .request({ method: "eth_accounts" })
-        .then((accounts) => {
-          if (accounts.length === 0) {
-            alert("Vui lòng kết nối đến Metamask");
-          } else {
-            setAccount(accounts[0]);
-          }
-        });
+      // await window.ethereum.request({ method: 'eth_accounts' }).then(accounts => {
+      //   if (accounts.length === 0) {
+      //     alert('Vui lòng kết nối đến Metamask')
+      //   } else {
+      //     setAccount(accounts[0])
+      //   }
+      // })
+
+      const web3 = window.web3;
+      const accounts = await web3.eth.getAccounts();
+      if (accounts.length === 0) {
+        alert("Vui lòng thêm tài khoản trong Metamask");
+      } else {
+        setAccount(accounts[0]);
+      }
 
       if (account) {
-        console.log(account);
         const networkId = await web3.eth.net.getId();
-        // const networkData = ArtFundsStorage.networks[networkId];
-        console.log("network: ", networkId);
-        const added = await ipfsClient.add(collection.file);
-        const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+        const networkData = ArtFundsStorage.networks[networkId];
+        // console.log(networkId)
+        if (networkData) {
+          const ArtFundsContract = new web3.eth.Contract(
+            ArtFundsStorage.abi,
+            networkData.address
+          );
+          console.log(networkData.address);
+          const added = await ipfsClient.add(collection.file);
+          const url = `https://ipfs.infura.io/ipfs/${added.path}`;
 
-        const ArtFundsContract = new web3.eth.Contract(
-          ArtFundsStorage.abi,
-          account
-        );
-        await ArtFundsContract.methods
-          .createCollection(url, collection.name, collection.description)
-          .send({ from: account })
-          .on("confirmation", (confNumber, receipt, latestBlockHash) => {
-            console.log(receipt);
-          })
-          .on("error", (err, receipt) => {
-            console.log(err);
-            console.log(receipt);
-          });
-        ArtFundsContract.methods.collectionCounter().call((err, res) => {
-          console.log("err, res", err, res);
-        });
+          await ArtFundsContract.methods
+            .createCollection(url, collection.name, collection.description)
+            .send({ from: account })
+            .on("confirmation", (confNumber, receipt, latestBlockHash) => {
+              console.log(receipt);
+            })
+            .on("error", (err, receipt) => {
+              console.log(err);
+              console.log(receipt);
+            });
+        }
       }
     } catch (error) {
       console.log("Error uploading file: ", error);

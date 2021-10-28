@@ -24,32 +24,28 @@ const MyCollection = () => {
   // }
   const web3 = new Web3(Web3.currentProvider || "http://localhost:8545");
 
-  const onTest = async () => {
-    let account = null;
-    await window.ethereum
-      .request({ method: "eth_accounts" })
-      .then((accounts) => {
-        if (accounts.length === 0) {
-          alert("Vui lòng kết nối đến Metamask");
-        } else {
-          account = accounts[0];
-        }
-      });
+  // const onTest = async () => {
+  //   let account = null
+  //   await window.ethereum.request({ method: 'eth_accounts' }).then(accounts => {
+  //     if (accounts.length === 0) {
+  //       alert('Vui lòng kết nối đến Metamask')
+  //     } else {
+  //       account = accounts[0]
+  //     }
+  //   })
+  //   console.log(account)
+  //   // const ArtFundsContract = new web3.eth.Contract(ArtFundsStorage.abi, account)
 
-    const ArtFundsContract = new web3.eth.Contract(
-      ArtFundsStorage.abi,
-      account
-    );
+  //   const ArtFundsContract = new web3.eth.Contract(ArtFundsStorage.abi, '0x1E825aabB297459F297FdcF4D15580C8Db1Bc83D')
 
-    ArtFundsContract.methods.collectionCounter().call((err, res) => {
-      console.log("err, res", err, res);
-    });
-    // const count = await ArtFundsContract.methods
-    //   .getCollectionCount(account)
-    //   .call();
-    // console.log(count);
-    // console.log(sting);
-  };
+  //   // const count = await ArtFundsContract.methods.collectionCounter().call()
+  //   // console.log({ count })
+
+  //   ArtFundsContract.methods.collectionCounter().call((err, res) => {
+  //     console.log('err, res', err, res)
+  //   })
+  //   // console.log(count)
+  // }
 
   return (
     <div className="my-collection">
@@ -61,9 +57,6 @@ const MyCollection = () => {
         <div className="new-collection">
           <button id="btnCreate" className="btn-dark" onClick={onToggle}>
             Tạo bộ sưu tập
-          </button>
-          <button id="btnCreate" className="btn-dark" onClick={onTest}>
-            Test
           </button>
           <CreateCollectionModal onToggle={onToggle} isShow={isShowModal} />
         </div>

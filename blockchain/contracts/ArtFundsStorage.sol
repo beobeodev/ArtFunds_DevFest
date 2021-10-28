@@ -189,7 +189,7 @@ contract ArtFundsStorage is ERC721 {
 
         // ownerCollections[msg.sender].push(collection);
 
-        emit CollectionCreated(
+        emit CollectionCreated( 
             collectionCounter,
             _imageURL,
             _name,
@@ -259,7 +259,7 @@ contract ArtFundsStorage is ERC721 {
     function getCollectionCount(address _owner)
         public
         view
-        returns (uint256 count)
+        returns (uint256)
     {
         require(_owner != address(0x0));
         return (collectionCounter);
