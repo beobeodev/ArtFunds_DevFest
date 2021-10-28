@@ -59,6 +59,7 @@ const CreateCollectionModal = ({ isShow, onToggle, submitCreate }) => {
       })
 
       if (account) {
+        console.log(account)
         const networkId = await web3.eth.net.getId()
         const networkData = ArtFundsStorage.networks[networkId]
 
@@ -69,16 +70,20 @@ const CreateCollectionModal = ({ isShow, onToggle, submitCreate }) => {
           ArtFundsStorage.abi,
           '0xfe0e4Ca51748A2012B0A81D2E695A31D4abe3D1A'
         )
-        await ArtFundsContract.methods
-          .createCollection(url, collection.name, collection.description)
-          .send({ from: account })
-          .on('confirmation', () => {
-            console.log('success')
-          })
-          .on('error', (err, receipt) => {
-            console.log(err)
-            console.log(receipt)
-          })
+        // await ArtFundsContract.methods
+        //   .createCollection(url, collection.name, collection.description)
+        //   .send({ from: account })
+        //   .on('confirmation', (confNumber, receipt, latestBlockHash) => {
+        //     console.log(receipt)
+        //   })
+        //   .on('error', (err, receipt) => {
+        //     console.log(err)
+        //     console.log(receipt)
+        //   })
+        let count = await ArtFundsContract.methods.getCollectionCount(account).call((err, res) => {
+          console.log(res)
+        })
+        console.log(count)
       }
     } catch (error) {
       console.log('Error uploading file: ', error)
@@ -95,7 +100,7 @@ const CreateCollectionModal = ({ isShow, onToggle, submitCreate }) => {
             </button>
           </div>
           <h1>Tạo bộ sưu tập mới của bạn</h1>
-          <label for='logo'>Logo</label>
+          <label htmlFor='logo'>Logo</label>
           {/* <input type='file' name='logo' id='logo' onChange={onSelectImage} /> */}
           {collection.url ? (
             <img src={collection.url} className='collection_image' alt='logo' />
