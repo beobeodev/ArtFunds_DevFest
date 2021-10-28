@@ -22,7 +22,7 @@ contract ArtFundsStorage is ERC721 {
         uint8 listSize;
     }
 
-    uint256 collectionCounter = 0;
+    uint256 public collectionCounter;
     mapping(address => Collection[]) public ownerCollections;
     // mapping(address => Collection) public collectionStructs;
     // uint256[] collections;
@@ -233,9 +233,10 @@ contract ArtFundsStorage is ERC721 {
         return (collection.imageURL, collection.name, collection.description);
     }
 
-    function getCollectionCount(address _owner) public view returns (uint256) {
+    function getCollectionCount(address _owner) public view returns (uint256 count) {
         require(_owner != address(0x0));
-        return ownerCollections[_owner].length;
+        return (collectionCounter);
+        // return ownerCollections[_owner].length;
     }
 
     // struct Order {
