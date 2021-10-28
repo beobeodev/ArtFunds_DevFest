@@ -6,6 +6,7 @@ import MyCollection from './pages/MyCollection/MyCollection'
 import React, { useState } from 'react'
 import Web3 from 'web3'
 import ArtFundsStorage from './abis/ArtFundsStorage.json'
+import ListItem from './pages/ListItem/ListItem'
 
 const App = () => {
   const [allCollectionUser, setAllCollectionUser] = useState([])
@@ -16,7 +17,7 @@ const App = () => {
       await loadBlockchainData()
     }
     load()
-  })
+  }, [])
   // const loadConnectMetamask = async () => {
   //   if (window.ethereum) {
   //     window.web3 = new Web3(window.ethereum)
@@ -49,11 +50,11 @@ const App = () => {
       if (networkData) {
         const ArtFundsContract = new web3.eth.Contract(ArtFundsStorage.abi, networkData.address)
         const totalCollectionUser = await ArtFundsContract.methods.getCollectionCount(accountAddress).call()
-        for (var i = 1; i <= totalCollectionUser; i++) {
-          const collectionItem = await ArtFundsContract.methods.ownerCollections(accountAddress, i)
-          setAllCollectionUser([...allCollectionUser, collectionItem])
+        console.log(totalCollectionUser)
+        for (var i = 0; i < totalCollectionUser; i++) {
+          const collectionItem = await ArtFundsContract.methods.getCollection(i, accountAddress).call()
+          setAllCollectionUser(prevState => [...prevState, collectionItem])
         }
-        console.log(allCollectionUser)
       }
     }
   }
@@ -62,7 +63,8 @@ const App = () => {
     <Router>
       <NavBar />
       <Route path='/' exact render={() => <Home />} />
-      <Route path='/mycollection' exact render={() => <MyCollection />} />
+      <Route path='/mycollection' render={() => <MyCollection listMyCollection={allCollectionUser} />} />
+      <Route path='/createNFT/:nameCollection/:idCollection' render={() => <ListItem />} />
     </Router>
   )
 }

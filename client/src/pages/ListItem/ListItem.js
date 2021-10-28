@@ -1,7 +1,76 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './ListItem.css'
+import CreateItemModal from '../../components/create_item_modal/CreateItemModal'
+import { useParams } from 'react-router'
+import ArtFundsStorage from '../../abis/ArtFundsStorage.json'
+import Web3 from 'web3'
 
 const ListItem = () => {
+  const [isShowModal, setIsShowModal] = useState(false)
+
+  const { nameCollection, idCollection } = useParams()
+
+  const onToggle = () => {
+    setIsShowModal(!isShowModal)
+    // console.log(isShowModal)
+  }
+
+  const [isLoading, setIsLoading] = useState(true)
+
+  const [listItem, setListItem] = useState([])
+
+  React.useEffect(() => {
+    async function load() {
+      await loadWeb3()
+      await loadList()
+      setIsLoading(false)
+    }
+    load()
+  }, [])
+
+  const loadWeb3 = async () => {
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum)
+    } else if (window.web3) {
+      window.web3 = new Web3(Web3.currentProvider || 'http://localhost:8545')
+    } else {
+      alert('Vui lòng kết nối đến Metamask')
+    }
+  }
+
+  const loadList = async () => {
+    // console.log(idCollection)
+    const web3 = window.web3
+    const accounts = await web3.eth.getAccounts()
+    if (accounts.length === 0) {
+      alert('Vui lòng thêm tài khoản trong Metamask')
+    } else {
+      const accountAddress = accounts[0]
+      const networkId = await web3.eth.net.getId()
+      const networkData = ArtFundsStorage.networks[networkId]
+      if (networkData) {
+        const ArtFundsContract = new web3.eth.Contract(ArtFundsStorage.abi, networkData.address)
+        const totalItemUser = await ArtFundsContract.methods.getDigitalItemOwnerCount(accountAddress).call()
+        for (var i = 0; i < totalItemUser; i++) {
+          const digitalItem = await ArtFundsContract.methods.getDigitalItem(i, accountAddress).call()
+          // // console.log(digitalItem)
+          // const result = await fetch(digitalItem._itemURL)
+          // const metaData = await result.json()
+          // console.log(metaData)
+
+          if (digitalItem._collectionID === idCollection.toString()) {
+            const result = await fetch(digitalItem._itemURL)
+            const metaData = await result.json()
+            // console.log(metaData)
+            digitalItem.imageURL = metaData.imageURL
+            setListItem(prevState => [...prevState, digitalItem])
+          }
+        }
+      }
+    }
+    // console.log(listItem)
+  }
+
   return (
     <div className='my-collection'>
       <div className='container'>
@@ -22,129 +91,28 @@ const ListItem = () => {
             </form>
           </div>
           <div className='create-bar'>
-            <button id='btnCreate' className='btn-dark'>
+            <button id='btnCreate' className='btn-dark' onClick={onToggle}>
               Thêm NFT mới
             </button>
-            <div id='modal' className='modal'>
-              <form action='/index.html' className='modal-content'>
-                <h1>Thêm NFT mới</h1> <span className='close'>&times;</span>
-                <label for='name'>Tên của NFT</label>
-                <input type='text' name='nameCollection' id='nameCollection' />
-                <label for='technical'>Kỹ thuật</label>
-                <input type='text' id='technical' />
-                <label for='material'>Vật liệu</label>
-                <input type='text' id='material' />
-                <label for='color'>Màu vẽ - Chất liệu</label>
-                <input type='text' id='color' />
-                <label for='style'>Trường phái</label>
-                <input type='text' id='style' />
-                <label for='logo'>Logo</label>
-                <div className='input-file-container'>
-                  <input className='input-file' id='my-file' type='file' />
-                  <label tabindex='0' for='my-file' className='input-file-trigger' style='text-align: center;'>
-                    Tải ảnh lên
-                  </label>
-                  <p className='file-return'></p>
-                </div>
-                <label for='discript'>Mô tả</label>
-                <textarea name='discript' id='discript' cols='30' rows='10'></textarea>
-                <button type='submit' className='btn-dark'>
-                  Tạo mới
-                </button>
-              </form>
-            </div>
+            <CreateItemModal onToggle={onToggle} isShow={isShowModal} idCollection={idCollection} />
           </div>
           {/* <script type="text/javascript" src="/js/createcollection.js"></script>
             <script type="text/javascript" src="/js/dragfile.js"></script> */}
         </div>
         <div className='container-collection'>
           <div className='collection'>
-            <div className='wrapped'>
-              <div id='logo'>
-                <a href='#'>
-                  <img src='/image/content-jimla.jpg' />
-                </a>
+            {listItem.map(item => (
+              <div className='wrapped' key={item._tokenId}>
+                <div id='logo'>
+                  <a href='/'>
+                    <img src={item.imageURL} alt='item' />
+                  </a>
+                </div>
+                <div id='title'>
+                  <h2>{item._name}</h2>
+                </div>
               </div>
-              <div id='title'>
-                <h2>Lorem ipsum dolor sit.</h2>
-              </div>
-            </div>
-
-            <div className='wrapped'>
-              <div id='image-cover'>
-                <a href='#'>
-                  <img src='/image/img-1.jpg' />
-                </a>
-              </div>
-              <div id='title'>
-                <h2>Lorem ipsum dolor sit.</h2>
-              </div>
-            </div>
-
-            <div className='wrapped'>
-              <div id='image-cover'>
-                <a href='#'>
-                  <img src='/image/img-2.jpg' />
-                </a>
-              </div>
-              <div id='title'>
-                <h2>Lorem ipsum dolor sit.</h2>
-              </div>
-            </div>
-
-            <div className='wrapped'>
-              <div id='image-cover'>
-                <a href='#'>
-                  <img src='/image/content-jimla.jpg' />
-                </a>
-              </div>
-              <div id='title'>
-                <h2>Lorem ipsum dolor sit.</h2>
-              </div>
-            </div>
-            <div className='wrapped'>
-              <div id='image-cover'>
-                <a href='#'>
-                  <img src='/image/content-jimla.jpg' />
-                </a>
-              </div>
-              <div id='title'>
-                <h2>Lorem ipsum dolor sit.</h2>
-              </div>
-            </div>
-
-            <div className='wrapped'>
-              <div id='image-cover'>
-                <a href='#'>
-                  <img src='/image/content-jimla.jpg' />
-                </a>
-              </div>
-              <div id='title'>
-                <h2>Lorem ipsum dolor sit.</h2>
-              </div>
-            </div>
-
-            <div className='wrapped'>
-              <div id='image-cover'>
-                <a href='#'>
-                  <img src='/image/img-2.jpg' />
-                </a>
-              </div>
-              <div id='title'>
-                <h2>Lorem ipsum dolor sit.</h2>
-              </div>
-            </div>
-
-            <div className='wrapped'>
-              <div id='image-cover'>
-                <a href='#'>
-                  <img src='/image/content-jimla.jpg' />
-                </a>
-              </div>
-              <div id='title'>
-                <h2>Lorem ipsum dolor sit.</h2>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
