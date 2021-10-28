@@ -62,7 +62,7 @@ const App = () => {
         //   setAllCollectionUser([...allCollectionUser, collectionItem]);
         // }
         const aCollection = await ArtFundsContract.methods
-          .getCollection(3, accountAddress)
+          .getCollection(1, networkData.address)
           .call();
         console.log(aCollection);
       }

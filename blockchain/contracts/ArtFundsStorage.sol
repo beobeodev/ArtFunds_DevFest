@@ -24,7 +24,7 @@ contract ArtFundsStorage is ERC721 {
 
     struct DigitalItem {
         uint256 tokenId;
-        uint256 collectionID;
+        uint256 belongByColID;
         string name;
         address payable mintedBy;
         address payable currentOwner;
@@ -41,6 +41,7 @@ contract ArtFundsStorage is ERC721 {
 
     event ItemCreated(
         uint256 id,
+        uint256 belongByColID,
         string name,
         address mintedBy,
         address currentOwner,
@@ -68,36 +69,39 @@ contract ArtFundsStorage is ERC721 {
     }
 
     // mint a new digital item
-    // function mintDigitalItem(
-    //     string memory _name,
-    //     uint256 _price,
-    //     string memory _imageURL,
-    //     uint256 _numberOfTransfers,
-    //     bool _forSale
-    // ) external {
-    //     // check if thic fucntion caller is not an zero address account
-    //     require(msg.sender != address(0));
-    //     // increment counter
-    //     digitalItemCounter++;
-    //     // check if a token exists with the above token id => incremented counter
-    //     require(!_exists(digitalItemCounter));
+    function mintDigitalItem(
+        uint256 belongByColID,
+        string memory _name,
+        uint256 _price,
+        string memory _imageURL,
+        uint256 _numberOfTransfers,
+        bool _forSale
+    ) external returns (bool success) {
+        // check if thic fucntion caller is not an zero address account
+        require(msg.sender != address(0));
+        // increment counter
+        digitalItemCounter++;
+        // check if a token exists with the above token id => incremented counter
+        require(!_exists(digitalItemCounter));
 
-    //     // mint the token
-    //     _mint(msg.sender, digitalItemCounter);
+        // mint the token
+        _mint(msg.sender, digitalItemCounter);
 
-    //     DigitalItem memory newDigitalItem = DigitalItem(
-    //         digitalItemCounter,
-    //         _name,
-    //         msg.sender,
-    //         msg.sender,
-    //         msg.sender,
-    //         _price,
-    //         _imageURL,
-    //         0,
-    //         true
-    //     );
-    //     ownerDigitalItems[msg.sender].push(newDigitalItem);
-    // }
+        DigitalItem memory newDigitalItem = DigitalItem(
+            digitalItemCounter,
+            belongByColID,
+            _name,
+            msg.sender,
+            msg.sender,
+            msg.sender,
+            _price,
+            _imageURL,
+            0,
+            true
+        );
+        ownerDigitalItems[msg.sender].push(newDigitalItem);
+        return true;
+    }
 
     // function updateCurrentOwnerDigitalItem(
     //     address _owner,
@@ -107,7 +111,7 @@ contract ArtFundsStorage is ERC721 {
     //     require(_owner != address(0x0));
     //     require(_newOwner != address(0x0));
     //     require(_tokenId >= 0);
-    //     DigitalItem storage digitalItem = ownerDigitalItems[_owner][_tokenId];
+    //     DigitalItem memory digitalItem = ownerDigitalItems[_owner][_tokenId];
     //     digitalItem.previousOwner = digitalItem.currentOwner;
     //     digitalItem.currentOwner = _newOwner;
     //     return true;
@@ -165,10 +169,14 @@ contract ArtFundsStorage is ERC721 {
     //     );
     // }
 
-    // function getDigitalItemCount(address _owner) public view returns (uint256) {
-    //     require(_owner != address(0x0));
-    //     return ownerDigitalItems[_owner].length;
-    // }
+    function getDigitalItemCount(address _owner)
+        public
+        view
+        returns (uint256 count)
+    {
+        require(_owner != address(0x0));
+        return ownerDigitalItems[_owner].length;
+    }
 
     //This function to create collection from address
     function createCollection(
@@ -183,14 +191,7 @@ contract ArtFundsStorage is ERC721 {
             _name,
             _description
         );
-        // ownerDigitalItems[msg.sender].push(newDigitalItem);
-        // collection.tokenId = collectionCounter;
-        // collection.imageURL = _imageURL;
-        // collection.name = _name;
-        // collection.description = _description;
-        // collection.listSize = 0;
         ownerCollections[msg.sender].push(collection);
-        // ownerCollections[msg.sender].push(collection);
 
         emit CollectionCreated(
             collectionCounter,
@@ -224,27 +225,27 @@ contract ArtFundsStorage is ERC721 {
         require(_owner != address(0x0));
         require(_tokenId >= 0);
         require(ownerCollections[_owner].length > 0);
-        Collection storage collection = ownerCollections[_owner][_tokenId];
+        Collection memory collection = ownerCollections[_owner][_tokenId];
 
         return (collection.imageURL, collection.name, collection.description);
     }
 
-    // function updateCollection(
-    //     uint256 _tokenId,
-    //     string memory _imageURL,
-    //     string memory _name,
-    //     string memory _description,
-    //     address _owner
-    // ) public returns (bool success) {
-    //     require(_owner != address(0x0));
-    //     require(_tokenId >= 0);
-    //     require(ownerCollections[_owner].length > 0);
-    //     Collection storage collection = ownerCollections[_owner][_tokenId];
-    //     collection.imageURL = _imageURL;
-    //     collection.name = _name;
-    //     collection.description = _description;
-    //     return true;
-    // }
+    function updateCollection(
+        uint256 _tokenId,
+        string memory _imageURL,
+        string memory _name,
+        string memory _description,
+        address _owner
+    ) public returns (bool success) {
+        require(_owner != address(0x0));
+        require(_tokenId >= 0);
+        require(ownerCollections[_owner].length > 0);
+        Collection memory collection = ownerCollections[_owner][_tokenId];
+        collection.imageURL = _imageURL;
+        collection.name = _name;
+        collection.description = _description;
+        return true;
+    }
 
     // function deleteCollection(address _owner, uint256 _tokenId)
     //     public
