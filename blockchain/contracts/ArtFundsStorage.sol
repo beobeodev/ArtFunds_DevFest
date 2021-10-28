@@ -256,9 +256,14 @@ contract ArtFundsStorage is ERC721 {
         return true;
     }
 
-    function getCollectionCount(address _owner) public view returns (uint256) {
+    function getCollectionCount(address _owner)
+        public
+        view
+        returns (uint256 count)
+    {
         require(_owner != address(0x0));
-        return ownerCollections[_owner].length;
+        // return (collectionCounter);
+        return (ownerCollections[_owner].length);
     }
 
     // struct Order {
