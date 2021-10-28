@@ -41,6 +41,7 @@ contract ArtFundsStorage is ERC721 {
 
     event ItemCreated(
         uint256 id,
+        uint256 belongByColID,
         string name,
         address mintedBy,
         address currentOwner,
@@ -115,7 +116,7 @@ contract ArtFundsStorage is ERC721 {
     //     require(_owner != address(0x0));
     //     require(_newOwner != address(0x0));
     //     require(_tokenId >= 0);
-    //     DigitalItem storage digitalItem = ownerDigitalItems[_owner][_tokenId];
+    //     DigitalItem memory digitalItem = ownerDigitalItems[_owner][_tokenId];
     //     digitalItem.previousOwner = digitalItem.currentOwner;
     //     digitalItem.currentOwner = _newOwner;
     //     return true;
@@ -171,10 +172,14 @@ contract ArtFundsStorage is ERC721 {
         );
     }
 
-    // function getDigitalItemCount(address _owner) public view returns (uint256) {
-    //     require(_owner != address(0x0));
-    //     return ownerDigitalItems[_owner].length;
-    // }
+    function getDigitalItemCount(address _owner)
+        public
+        view
+        returns (uint256 count)
+    {
+        require(_owner != address(0x0));
+        return ownerDigitalItems[_owner].length;
+    }
 
     //This function to create collection from address
     function createCollection(
@@ -189,14 +194,7 @@ contract ArtFundsStorage is ERC721 {
             _name,
             _description
         );
-        // ownerDigitalItems[msg.sender].push(newDigitalItem);
-        // collection.tokenId = collectionCounter;
-        // collection.imageURL = _imageURL;
-        // collection.name = _name;
-        // collection.description = _description;
-        // collection.listSize = 0;
         ownerCollections[msg.sender].push(collection);
-        // ownerCollections[msg.sender].push(collection);
 
         emit CollectionCreated(
             collectionCounter,
