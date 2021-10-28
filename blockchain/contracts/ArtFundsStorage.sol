@@ -226,54 +226,51 @@ contract ArtFundsStorage is ERC721 {
         return (collection.imageURL, collection.name, collection.description);
     }
 
-    function updateCollection(
-        uint256 _tokenId,
-        string memory _imageURL,
-        string memory _name,
-        string memory _description,
-        address _owner
-    ) public returns (bool success) {
-        require(_owner != address(0x0));
-        require(_tokenId >= 0);
-        require(ownerCollections[_owner].length > 0);
-        Collection storage collection = ownerCollections[_owner][_tokenId];
-        collection.imageURL = _imageURL;
-        collection.name = _name;
-        collection.description = _description;
-        return true;
-    }
+    // function updateCollection(
+    //     uint256 _tokenId,
+    //     string memory _imageURL,
+    //     string memory _name,
+    //     string memory _description,
+    //     address _owner
+    // ) public returns (bool success) {
+    //     require(_owner != address(0x0));
+    //     require(_tokenId >= 0);
+    //     require(ownerCollections[_owner].length > 0);
+    //     Collection storage collection = ownerCollections[_owner][_tokenId];
+    //     collection.imageURL = _imageURL;
+    //     collection.name = _name;
+    //     collection.description = _description;
+    //     return true;
+    // }
 
-    function deleteCollection(address _owner, uint256 _tokenId)
+    // function deleteCollection(address _owner, uint256 _tokenId)
+    //     public
+    //     returns (bool success)
+    // {
+    //     require(_owner != address(0x0));
+    //     require(_tokenId >= 0);
+    //     require(ownerCollections[_owner].length > 0);
+    //     // uint256 rowToDelete = ownerCollections[_owner][_tokenId].index;
+    //     delete ownerCollections[_owner][_tokenId];
+    //     collectionCounter--;
+    //     return true;
+    // }
+
+    function getCollectionCount(address _owner)
         public
-        returns (bool success)
+        view
+        returns (uint256)
     {
         require(_owner != address(0x0));
-        require(_tokenId >= 0);
-        require(ownerCollections[_owner].length > 0);
-        // uint256 rowToDelete = ownerCollections[_owner][_tokenId].index;
-        delete ownerCollections[_owner][_tokenId];
-        collectionCounter--;
-        return true;
+        // return (collectionCounter);
+        return (ownerCollections[_owner].length);
     }
 
-    function getCollectionCount(address _owner) public view returns (uint256) {
-        require(_owner != address(0x0));
-        return (collectionCounter);
-        // return ownerCollections[_owner].length;
+    struct Order {
+        address maker;
+        address taker;
+        uint256 tokenId;
     }
-
-
-    // get total number of tokens owned by an address
-    function getTotalNumberOfTokensOwnedByAnAddress(address _owner) public view returns(uint256) {
-        uint256 totalNumberOfTokensOwned = balanceOf(_owner);
-        return totalNumberOfTokensOwned;
-    }
-
-    // struct Order {
-    //     address maker;
-    //     address taker;
-    //     uint256 tokenId;
-    // }
 
     // mapping(uint256 => Order) orders;
 
