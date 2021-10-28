@@ -76,6 +76,11 @@ const CreateCollectionModal = ({ isShow, onToggle, submitCreate }) => {
           const added = await ipfsClient.add(collection.file)
           const url = `https://ipfs.infura.io/ipfs/${added.path}`
 
+          // await ArtFundsContract.methods
+          //   .createCollection(url, collection.name, collection.description)
+          //   .estimateGas({ from: account }, (err, gasAmount) => {
+          //     console.log(gasAmount)
+          //   })
           await ArtFundsContract.methods
             .createCollection(url, collection.name, collection.description)
             .send({ from: account })
