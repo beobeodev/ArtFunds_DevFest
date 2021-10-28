@@ -1,8 +1,8 @@
 //import ERC721 interface
 import "./ERC721.sol";
-
-pragma abicoder v2;
+// SPDX-License-Identifier: MIT
 pragma solidity >=0.6.0 <0.8.0;
+pragma abicoder v2;
 
 //implement
 contract ArtFundsStorage is ERC721 {
@@ -10,7 +10,7 @@ contract ArtFundsStorage is ERC721 {
     string public collectionName;
     // this contract's token symbol
     string public collectionNameSymbol;
-
+    address payable public ARTFUNDS;
     struct Collection {
         uint256 tokenId;
         string imageURL;
@@ -20,7 +20,6 @@ contract ArtFundsStorage is ERC721 {
 
     uint256 public collectionCounter;
     mapping(address => Collection[]) public ownerCollections;
-    // uint256[] collections;
 
     struct DigitalItem {
         uint256 tokenId;
@@ -28,16 +27,15 @@ contract ArtFundsStorage is ERC721 {
         string name;
         uint256 price;
         string itemURL;
-        // address payable mintedBy;
+        address payable mintedBy;
         address payable currentOwner;
         // address payable previousOwner;
         uint256 numberOfTransfers;
-        bool forSale;   
+        bool forSale;
     }
 
-    uint256 public digitalItemCounter; 
+    uint256 public digitalItemCounter;
     mapping(address => DigitalItem[]) public ownerDigitalItems;
-    // uint256[] digitalItems;
 
     event ItemCreated(
         uint256 id,
@@ -45,9 +43,8 @@ contract ArtFundsStorage is ERC721 {
         string name,
         address mintedBy,
         address currentOwner,
-        address previousOwner,
         uint256 price,
-        string imageURL,
+        string itemURL,
         uint256 numberOfTransfers,
         bool forSale
     );
@@ -66,6 +63,7 @@ contract ArtFundsStorage is ERC721 {
     constructor() ERC721("ArtFunds Collection", "CB") {
         collectionName = name();
         collectionNameSymbol = symbol();
+        ARTFUNDS = address(uint256(0xb6dC743c59122F7b2F0734c6CBe04b2B7155B24e));
     }
 
     // mint a new digital item
@@ -82,7 +80,6 @@ contract ArtFundsStorage is ERC721 {
         digitalItemCounter++;
         // check if a token exists with the above token id => incremented counter
         require(!_exists(digitalItemCounter));
-
         // mint the token
         _mint(msg.sender, digitalItemCounter);
         // set token URL (bind token id with the passed in token URL)
@@ -101,47 +98,37 @@ contract ArtFundsStorage is ERC721 {
             // _imageURL,
             // _description,
             msg.sender,
+            msg.sender,
             0,
             _forSale
         );
-
         ownerDigitalItems[msg.sender].push(newDigitalItem);
     }
 
-    // function updateCurrentOwnerDigitalItem(
-    //     address _owner,
-    //     address payable _newOwner,
-    //     uint256 _tokenId
-    // ) public returns (bool success) {
-    //     require(_owner != address(0x0));
-    //     require(_newOwner != address(0x0));
-    //     require(_tokenId >= 0);
-    //     DigitalItem memory digitalItem = ownerDigitalItems[_owner][_tokenId];
-    //     digitalItem.previousOwner = digitalItem.currentOwner;
-    //     digitalItem.currentOwner = _newOwner;
-    //     return true;
-    // }
-
-    // function updateInfoBasicDigitalItem(
-    //     address _owner,
-    //     uint256 _tokenId,
-    //     string memory _name,
-    //     uint256 _price,
-    //     string memory _imageURL,
-    //     uint256 _numberOfTransfers,
-    //     bool _forSale
-    // ) public returns (bool success) {
-    //     require(_owner != address(0x0));
-    //     require(_tokenId >= 0);
-    //     require(ownerDigitalItems[_owner].length > 0);
-    //     DigitalItem storage digitalItem = ownerDigitalItems[_owner][_tokenId];
-    //     digitalItem.imageURL = _imageURL;
-    //     digitalItem.name = _name;
-    //     digitalItem.price = _price;
-    //     digitalItem.forSale = _forSale;
-    //     digitalItem.numberOfTransfers = _numberOfTransfers;
-    //     return true;
-    // }
+    function updateInfoBasicDigitalItem(
+        address _owner,
+        uint256 _tokenId,
+        uint256 _newCollectionID,
+        string memory _name,
+        uint256 _price,
+        string memory _itemURL,
+        uint256 _numberOfTransfers,
+        bool _forSale
+    ) public returns (bool success) {
+        require(_exists(_tokenId));
+        require(_exists(_newCollectionID));
+        address tokenOwner = ownerOf(_tokenId);
+        require(tokenOwner == _owner);
+        DigitalItem memory digitalItem = ownerDigitalItems[_owner][_tokenId];
+        digitalItem.itemURL = _itemURL;
+        digitalItem.name = _name;
+        digitalItem.price = _price;
+        digitalItem.forSale = _forSale;
+        digitalItem.collectionID = _newCollectionID;
+        digitalItem.numberOfTransfers = _numberOfTransfers;
+        ownerDigitalItems[_owner][_tokenId] = digitalItem;
+        return true;
+    }
 
     function getDigitalItem(uint256 _itemID, address _owner)
         public
@@ -206,16 +193,6 @@ contract ArtFundsStorage is ERC721 {
         return true;
     }
 
-    // function getCollections(address _owner)
-    //     public
-    //     view
-    //     returns (Collection[] memory)
-    // {
-    //     require(_owner != address(0x0));
-    //     require(ownerCollections[_owner].length > 0);
-    //     return ownerCollections[_owner];
-    // }
-
     function getCollection(uint256 _tokenId, address _owner)
         public
         view
@@ -226,12 +203,14 @@ contract ArtFundsStorage is ERC721 {
             string memory _description
         )
     {
-        // require(_owner != address(0x0));
-        // require(_tokenId >= 0);
-        // require(ownerCollections[_owner].length > 0);
         Collection memory collection = ownerCollections[_owner][_tokenId];
 
-        return (collection.tokenId, collection.imageURL, collection.name, collection.description);
+        return (
+            collection.tokenId,
+            collection.imageURL,
+            collection.name,
+            collection.description
+        );
     }
 
     // // function updateCollection(
@@ -251,53 +230,109 @@ contract ArtFundsStorage is ERC721 {
     // //     return true;
     // // }
 
-    // // function deleteCollection(address _owner, uint256 _tokenId)
-    // //     public
-    // //     returns (bool success)
-    // // {
-    // //     require(_owner != address(0x0));
-    // //     require(_tokenId >= 0);
-    // //     require(ownerCollections[_owner].length > 0);
-    // //     // uint256 rowToDelete = ownerCollections[_owner][_tokenId].index;
-    // //     delete ownerCollections[_owner][_tokenId];
-    // //     collectionCounter--;
-    // //     return true;
-    // // }
-
-    
-
     function getCollectionCount(address _owner)
         public
         view
         returns (uint256 count)
     {
-        require(_owner != address(0x0));
         return ownerCollections[_owner].length;
-    }   
+    }
 
-    function getDigitalItemOwnerCount(address _owner) public view returns (uint256 count) {
+    function getDigitalItemOwnerCount(address _owner)
+        public
+        view
+        returns (uint256 count)
+    {
         return ownerDigitalItems[_owner].length;
     }
 
-    struct Order {
-        address maker;
-        address taker;
-        uint256 tokenId;
+    // by a token by passing in the token's id
+    function buyItem(uint256 _tokenId) public payable returns (bool success) {
+        // check if the function caller is not an zero account address
+        require(msg.sender != address(0x0));
+        // check if the token id of the token being bought exists or not
+        require(_exists(_tokenId));
+        // get the token's owner
+        address tokenOwner = ownerOf(_tokenId);
+        // token's owner should not be an zero address account
+        require(tokenOwner != address(0));
+        // the one who wants to buy the token should not be the token's owner
+        require(tokenOwner != msg.sender);
+        // get that token from all crypto boys mapping and create a memory of it defined as (struct => digitalItem)
+        DigitalItem memory digitalItem = ownerDigitalItems[tokenOwner][
+            _tokenId
+        ];
+        // price sent in to buy should be equal to or more than the token's price
+        require(msg.value >= digitalItem.price);
+        // token should be for sale
+        require(digitalItem.forSale);
+        // transfer the token from owner to the caller of the function (buyer)
+        _transfer(tokenOwner, msg.sender, _tokenId);
+        // get owner of the token
+        address payable sendTo = digitalItem.currentOwner;
+        // get guy who mint this token
+        address payable sendToRoot = digitalItem.mintedBy;
+        // send token's worth of ethers to the owner
+        sendTo.transfer((msg.value * 95) / 100);
+        sendToRoot.transfer((msg.value * 3) / 100);
+        // send worth to marketplace
+        ARTFUNDS.transfer((msg.value * 2) / 100);
+        // update the token's previous owner
+        // digitalItem.previousOwner = digitalItem.currentOwner;
+        // update the token's current owner
+        digitalItem.currentOwner = msg.sender;
+        // update the how many times this token was transfered
+        digitalItem.numberOfTransfers += 1;
+        // set and update that token in the mapping
+        ownerDigitalItems[msg.sender][_tokenId] = digitalItem;
+        return true;
     }
 
-    mapping(uint256 => Order) orders;
-
-    function makeOrder(uint256 _tokenId, uint256 _price) external {
-        require(_tokenId >= 0);
-        // require(condition);
-        // validate nft
-        // ...
+    function changeItemPrice(uint256 _tokenId, uint256 _newPrice)
+        public
+        returns (bool success)
+    {
+        // require caller of the function is not an empty address
+        require(msg.sender != address(0x0));
+        // require that token should exist
+        require(_exists(_tokenId));
+        // get the token's owner
+        address tokenOwner = ownerOf(_tokenId);
+        // check that token's owner should be equal to the caller of the function
+        require(tokenOwner == msg.sender);
+        // get that token from all crypto boys mapping and create a memory of it defined as (struct => digitalItem)
+        DigitalItem memory digitalItem = ownerDigitalItems[tokenOwner][
+            _tokenId
+        ];
+        // update token's price with new price
+        digitalItem.price = _newPrice;
+        // set and update that token in the mapping
+        ownerDigitalItems[tokenOwner][_tokenId] = digitalItem;
+        return true;
     }
 
-    function takeOrder(uint256 _tokenId) external {
-        // check order exists
-        // validate funds
-        // transfer funds
-        // transfer nft
-    }
+    // switch between set for sale and set not for sale
+    // function toggleForSale(uint256 _tokenId) public returns (bool statusSale) {
+    //     // require caller of the function is not an empty address
+    //     require(msg.sender != address(0));
+    //     // require that token should exist
+    //     require(_exists(_tokenId));
+    //     // get the token's owner
+    //     address tokenOwner = ownerOf(_tokenId);
+    //     // check that token's owner should be equal to the caller of the function
+    //     require(tokenOwner == msg.sender);
+    //     // get that token from all crypto boys mapping and create a memory of it defined as (struct => digitalItem)
+    //     DigitalItem memory digitalItem = ownerDigitalItems[tokenOwner][
+    //         _tokenId
+    //     ];
+    //     // if token's forSale is false make it true and vice versa
+    //     if (digitalItem.forSale) {
+    //         digitalItem.forSale = false;
+    //     } else {
+    //         digitalItem.forSale = true;
+    //     }
+    //     // set and update that token in the mapping
+    //     ownerDigitalItems[tokenOwner][_tokenId] = digitalItem;
+    //     return digitalItem.forSale;
+    // }
 }
