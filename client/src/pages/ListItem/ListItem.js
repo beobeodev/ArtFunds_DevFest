@@ -15,15 +15,12 @@ const ListItem = () => {
     // console.log(isShowModal)
   }
 
-  const [isLoading, setIsLoading] = useState(true)
-
   const [listItem, setListItem] = useState([])
 
   React.useEffect(() => {
     async function load() {
       await loadWeb3()
       await loadList()
-      setIsLoading(false)
     }
     load()
   }, [])
@@ -52,14 +49,14 @@ const ListItem = () => {
         const ArtFundsContract = new web3.eth.Contract(ArtFundsStorage.abi, networkData.address)
         const totalItemUser = await ArtFundsContract.methods.getDigitalItemOwnerCount(accountAddress).call()
         for (var i = 0; i < totalItemUser; i++) {
-          const digitalItem = await ArtFundsContract.methods.getDigitalItem(i, accountAddress).call()
-          // // console.log(digitalItem)
+          let digitalItem = await ArtFundsContract.methods.getDigitalItem(i, accountAddress).call()
+          digitalItem = Object.assign({}, digitalItem)
           // const result = await fetch(digitalItem._itemURL)
           // const metaData = await result.json()
           // console.log(metaData)
 
-          if (digitalItem._collectionID === idCollection.toString()) {
-            const result = await fetch(digitalItem._itemURL)
+          if (digitalItem.collectionID === idCollection.toString()) {
+            const result = await fetch(digitalItem.itemURL)
             const metaData = await result.json()
             // console.log(metaData)
             digitalItem.imageURL = metaData.imageURL
@@ -87,7 +84,7 @@ const ListItem = () => {
               <span className='search-icon'>
                 <i className='fa fa-search'></i>
               </span>
-              <input type='search' id='search' placeholder='Tìm kiếm' />
+              <input className='input_search' type='search' id='search' placeholder='Tìm kiếm' />
             </form>
           </div>
           <div className='create-bar'>
@@ -102,14 +99,14 @@ const ListItem = () => {
         <div className='container-collection'>
           <div className='collection'>
             {listItem.map(item => (
-              <div className='wrapped' key={item._tokenId}>
+              <div className='wrapped' key={item.tokenId}>
                 <div id='logo'>
                   <a href='/'>
                     <img src={item.imageURL} alt='item' />
                   </a>
                 </div>
                 <div id='title'>
-                  <h2>{item._name}</h2>
+                  <h2>{item.name}</h2>
                 </div>
               </div>
             ))}

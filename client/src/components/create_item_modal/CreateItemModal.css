@@ -121,7 +121,7 @@ button {
   border: none;
 }
 
-label {
+.itemmodal_label {
   display: block;
   padding: 10px;
   width: 100%;
@@ -129,7 +129,7 @@ label {
   margin-bottom: -5px;
 }
 
-input,
+.itemmodal_input,
 textarea {
   width: 100%;
   height: 100%;

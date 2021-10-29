@@ -3,7 +3,7 @@ import './CreateCollectionModal.css'
 import ReactDOM from 'react-dom'
 import ipfsClient from '../../utils/ipfs'
 import ArtFundsStorage from '../../abis/ArtFundsStorage.json'
-// import Web3 from 'web3'
+import Web3 from 'web3'
 
 const CreateCollectionModal = ({ isShow, onToggle }) => {
   // const [selectedFile, setSelectedFile] = useState()
@@ -17,7 +17,7 @@ const CreateCollectionModal = ({ isShow, onToggle }) => {
 
   // const web3 = new Web3(Web3.currentProvider || 'http://localhost:8545')
 
-  const [account, setAccount] = useState(null)
+  // const [account, setAccount] = useState(null)
 
   const onSelectImage = async e => {
     if (!e.target.files || e.target.files.length === 0) {
@@ -58,12 +58,16 @@ const CreateCollectionModal = ({ isShow, onToggle }) => {
       //   }
       // })
 
-      const web3 = window.web3
-      const accounts = await web3.eth.getAccounts()
-      if (accounts.length === 0) {
-        alert('Vui lòng thêm tài khoản trong Metamask')
-      } else {
-        setAccount(accounts[0])
+      let web3
+      let account
+      if (window.ethereum) {
+        web3 = new Web3(Web3.currentProvider || 'http://localhost:8545')
+        const accounts = await web3.eth.getAccounts()
+        if (accounts.length === 0) {
+          alert('Vui lòng kết nối tài khoản trong Metamask')
+        } else {
+          account = accounts[0]
+        }
       }
 
       if (account) {
@@ -72,15 +76,14 @@ const CreateCollectionModal = ({ isShow, onToggle }) => {
         console.log(networkId)
         if (networkData) {
           const ArtFundsContract = new web3.eth.Contract(ArtFundsStorage.abi, networkData.address)
-          console.log(networkData.address)
+          // console.log(networkData.address)
           const added = await ipfsClient.add(collection.file)
           const url = `https://ipfs.infura.io/ipfs/${added.path}`
 
-          // await ArtFundsContract.methods
+          // const a = await ArtFundsContract.methods
           //   .createCollection(url, collection.name, collection.description)
-          //   .estimateGas({ from: account }, (err, gasAmount) => {
-          //     console.log(gasAmount)
-          //   })
+          //   .estimateGas({ from: account })
+          // console.log(a)
           await ArtFundsContract.methods
             .createCollection(url, collection.name, collection.description)
             .send({ from: account })
@@ -89,7 +92,6 @@ const CreateCollectionModal = ({ isShow, onToggle }) => {
             })
             .on('error', (err, receipt) => {
               console.log(err)
-              console.log(receipt)
             })
           window.location.reload()
         }
@@ -109,7 +111,9 @@ const CreateCollectionModal = ({ isShow, onToggle }) => {
             </button>
           </div>
           <h1>Tạo bộ sưu tập mới của bạn</h1>
-          <label htmlFor='logo'>Logo</label>
+          <label htmlFor='logo' className='collectionmodal_label'>
+            Logo
+          </label>
           {/* <input type='file' name='logo' id='logo' onChange={onSelectImage} /> */}
           {collection.url ? (
             <img src={collection.url} className='collection_image' alt='logo' />
@@ -122,9 +126,13 @@ const CreateCollectionModal = ({ isShow, onToggle }) => {
               <p className='file-return'></p>
             </div>
           )}
-          <label htmlFor='name'>Tên bộ sưu tập</label>
-          <input type='text' name='name' id='nameCollection' onChange={handleChange} />
-          <label htmlFor='discript'>Mô tả</label>
+          <label htmlFor='name' className='collectionmodal_label'>
+            Tên bộ sưu tập
+          </label>
+          <input type='text' name='name' id='nameCollection' className='input_name' onChange={handleChange} />
+          <label htmlFor='discript' className='collectionmodal_label'>
+            Mô tả
+          </label>
           <textarea name='description' id='discript' cols='30' rows='10' onChange={handleChange}></textarea>
           <button type='submit' className='btn-dark'>
             Tạo mới

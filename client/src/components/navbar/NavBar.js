@@ -1,15 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './NavBar.css'
 import '../../'
 import { Link } from 'react-router-dom'
+import Web3 from 'web3'
 
 const NavBar = () => {
+  const [accountAddress, setAccountAddress] = useState()
+
+  React.useEffect(() => {
+    async function load() {
+      let web3
+      if (window.ethereum) {
+        let web3 = new Web3(Web3.currentProvider || 'http://localhost:8545')
+        const accounts = await web3.eth.getAccounts()
+        if (accounts.length !== 0) {
+          setAccountAddress(accounts[0])
+        }
+      }
+    }
+    load()
+  })
+
   const connectWallet = async () => {
     await window.ethereum.request({ method: 'eth_requestAccounts' }).then(accounts => {
       if (accounts.length === 0) {
-        alert('Vui lòng kết nối đến Metamask')
+        alert('Vui lòng thêm tài khoản Metamask')
       } else {
-        console.log(accounts[0])
+        setAccountAddress(accounts[0])
       }
     })
   }
@@ -30,9 +47,11 @@ const NavBar = () => {
               </a>
             </li>
             <li>
-              <a href='/#' className='btn btn-nav'>
-                Sàn giao dịch
-              </a>
+              <Link to='/marketplace'>
+                <a href='/' className='btn btn-nav'>
+                  Thị trường
+                </a>
+              </Link>
             </li>
             <li>
               <a href='/#' className='btn btn-nav'>
@@ -63,9 +82,13 @@ const NavBar = () => {
               </ul>
             </li>
             <li>
-              <button className='button_connect' onClick={connectWallet}>
-                Kết nối ví
-              </button>
+              {accountAddress ? (
+                <button className='button_disconnect'>Đã kết nối ví</button>
+              ) : (
+                <button className='button_connect' onClick={connectWallet}>
+                  Kết nối ví
+                </button>
+              )}
             </li>
           </ul>
         </div>

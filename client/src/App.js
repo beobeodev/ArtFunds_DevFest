@@ -7,6 +7,7 @@ import React, { useState } from 'react'
 import Web3 from 'web3'
 import ArtFundsStorage from './abis/ArtFundsStorage.json'
 import ListItem from './pages/ListItem/ListItem'
+import MarketPlace from './pages/MarketPlace/MarketPlace'
 
 const App = () => {
   const [allCollectionUser, setAllCollectionUser] = useState([])
@@ -31,10 +32,11 @@ const App = () => {
   const loadWeb3 = async () => {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum)
+      await window.ethereum.enable()
     } else if (window.web3) {
       window.web3 = new Web3(Web3.currentProvider || 'http://localhost:8545')
     } else {
-      alert('Vui lòng kết nối đến Metamask')
+      // alert('Vui lòng kết nối đến Metamask')
     }
   }
 
@@ -50,7 +52,7 @@ const App = () => {
       if (networkData) {
         const ArtFundsContract = new web3.eth.Contract(ArtFundsStorage.abi, networkData.address)
         const totalCollectionUser = await ArtFundsContract.methods.getCollectionCount(accountAddress).call()
-        console.log(totalCollectionUser)
+        // console.log(totalCollectionUser)
         for (var i = 0; i < totalCollectionUser; i++) {
           const collectionItem = await ArtFundsContract.methods.getCollection(i, accountAddress).call()
           setAllCollectionUser(prevState => [...prevState, collectionItem])
@@ -65,6 +67,7 @@ const App = () => {
       <Route path='/' exact render={() => <Home />} />
       <Route path='/mycollection' render={() => <MyCollection listMyCollection={allCollectionUser} />} />
       <Route path='/createNFT/:nameCollection/:idCollection' render={() => <ListItem />} />
+      <Route path='/marketplace' render={() => <MarketPlace />} />
     </Router>
   )
 }

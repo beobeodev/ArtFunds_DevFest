@@ -2,7 +2,7 @@
 import "./ERC721.sol";
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.6.0 <0.8.0;
-pragma abicoder v2;
+pragma experimental ABIEncoderV2;
 
 //implement
 contract ArtFundsStorage is ERC721 {
@@ -36,6 +36,8 @@ contract ArtFundsStorage is ERC721 {
 
     uint256 public digitalItemCounter;
     mapping(address => DigitalItem[]) public ownerDigitalItems;
+
+    DigitalItem[] public listAllDigitalItem;
 
     event ItemCreated(
         uint256 id,
@@ -102,6 +104,8 @@ contract ArtFundsStorage is ERC721 {
             0,
             _forSale
         );
+
+        listAllDigitalItem.push(newDigitalItem);
         ownerDigitalItems[msg.sender].push(newDigitalItem);
     }
 
@@ -134,29 +138,15 @@ contract ArtFundsStorage is ERC721 {
         public
         view
         returns (
-            uint256 _tokenId,
-            uint256 _collectionID,
-            string memory _name,
-            uint256 _price,
-            string memory _itemURL,
-            uint256 numberOfTransfers,
-            bool _forSale
+            DigitalItem memory
         )
     {
         require(_owner != address(0x0));
-        require(_collectionID >= 0);
+        require(collectionCounter >= 0);
         require(ownerDigitalItems[_owner].length > 0);
         DigitalItem memory digitalItem = ownerDigitalItems[_owner][_itemID];
 
-        return (
-            digitalItem.tokenId,
-            digitalItem.collectionID,
-            digitalItem.name,
-            digitalItem.price,
-            digitalItem.itemURL,
-            digitalItem.numberOfTransfers,
-            digitalItem.forSale
-        );
+        return digitalItem;
     }
 
     function getDigitalItemCount(address _owner)
