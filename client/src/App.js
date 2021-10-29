@@ -90,6 +90,7 @@ const App = () => {
         <Route path="/marketplace" render={() => <MarketPlace />} />
         <Route path="/detailitem/:idItem" render={() => <DetailItem />} />
         <Route path="/mynft" render={() => <MyNFT />} />
+        <Route path="/myprofile" render={() => <MyProfile />} />
       </Switch>
     </div>
   );
