@@ -11,7 +11,7 @@ const NavBar = () => {
     async function load() {
       let web3
       if (window.ethereum) {
-        let web3 = new Web3(Web3.currentProvider || 'http://localhost:8545')
+        web3 = new Web3(Web3.currentProvider || 'http://localhost:8545')
         const accounts = await web3.eth.getAccounts()
         if (accounts.length !== 0) {
           setAccountAddress(accounts[0])
@@ -42,9 +42,9 @@ const NavBar = () => {
         <div id='navbar'>
           <ul>
             <li>
-              <a href='/#' className='btn btn-nav'>
+              <Link to='/' className='btn btn-nav'>
                 Trang chủ
-              </a>
+              </Link>
             </li>
             <li>
               <Link to='/marketplace' className='btn btn-nav'>
@@ -53,31 +53,28 @@ const NavBar = () => {
                 {/* </a> */}
               </Link>
             </li>
-            <li>
-              <a href='/#' className='btn btn-nav'>
-                Bộ sưu tập
-              </a>
-            </li>
             {/* <li>
               <a href='/#' className='btn btn-nav'>
                 Kết nối ví
               </a>
             </li> */}
             <li>
-              <a href='/#' className='btn btn-nav'>
-                Tài khoản
-              </a>
+              <span className='btn btn-nav'>Tài khoản</span>
               <ul>
                 <li>
-                  <Link to='/' className='dropdown_account'>
+                  <Link to='/myprofile' className='dropdown_account'>
                     Hồ sơ của tôi
                   </Link>
                 </li>
                 <li>
-                  <a href='/mycollection'>Bộ sưu tập của tôi</a>
+                  <Link to='/mycollection' className='dropdown_account'>
+                    Bộ sưu tập của tôi
+                  </Link>
                 </li>
                 <li>
-                  <a href='/mynft'>Những artwork đã mua</a>
+                  <Link to='/mynft' className='dropdown_account'>
+                    Những artwork đã mua
+                  </Link>
                 </li>
               </ul>
             </li>

@@ -10,6 +10,7 @@ import ListItem from './pages/ListItem/ListItem'
 import MarketPlace from './pages/MarketPlace/MarketPlace'
 import DetailItem from './pages/DetailItem/DetailItem'
 import MyNFT from './components/MyNFT/MyNFT'
+import MyProfile from './pages/MyProfile/MyProfile'
 
 const App = () => {
   const [allCollectionUser, setAllCollectionUser] = useState([])
@@ -72,6 +73,7 @@ const App = () => {
       <Route path='/marketplace' render={() => <MarketPlace />} />
       <Route path='/detailitem/:idItem' render={() => <DetailItem />} />
       <Route path='/mynft' render={() => <MyNFT />} />
+      <Route path='/myprofile' render={() => <MyProfile />} />
     </Router>
   )
 }
