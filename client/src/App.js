@@ -46,6 +46,9 @@ const App = () => {
   const loadBlockchainData = async () => {
     const web3 = window.web3
     const accounts = await web3.eth.getAccounts()
+    window.ethereum.on('accountsChanged', () => {
+      window.location.reload()
+    })
     if (accounts.length === 0) {
       alert('Vui lòng thêm tài khoản trong Metamask')
     } else {

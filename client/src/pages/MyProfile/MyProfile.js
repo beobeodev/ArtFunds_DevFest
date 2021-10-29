@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Web3 from 'web3'
+import './MyProfile.css'
 // import ArtFundsStorage from '../../abis/ArtFundsStorage.json'
 
 const MyProfile = () => {
+  const [address, setAddress] = useState('')
+
+  const [listObject, setListObject] = useState([])
+
   React.useEffect(() => {
     async function load() {
       await loadWeb3()
@@ -29,77 +34,76 @@ const MyProfile = () => {
       alert('Vui lòng thêm tài khoản trong Metamask')
     } else {
       const accountAddress = accounts[0]
-
+      setAddress(accountAddress)
       const number = await web3.eth.getBlockNumber()
 
       console.log(number)
       for (var i = 0; i < number; i++) {
         var block = await web3.eth.getBlock(i, true)
 
+        var date = new Date(block.timestamp * 1000)
+
         if (block != null && block.transactions != null) {
           block.transactions.forEach(function (e) {
-            if (accountAddress === '*' || accountAddress === e.from || accountAddress === e.to) {
-              console.log(
-                '  tx hash          : ' +
-                  e.hash +
-                  '\n' +
-                  '   nonce           : ' +
-                  e.nonce +
-                  '\n' +
-                  '   blockHash       : ' +
-                  e.blockHash +
-                  '\n' +
-                  '   blockNumber     : ' +
-                  e.blockNumber +
-                  '\n' +
-                  '   transactionIndex: ' +
-                  e.transactionIndex +
-                  '\n' +
-                  '   from            : ' +
-                  e.from +
-                  '\n' +
-                  '   to              : ' +
-                  e.to +
-                  '\n' +
-                  '   value           : ' +
-                  e.value +
-                  '\n' +
-                  '   gasPrice        : ' +
-                  e.gasPrice +
-                  '\n' +
-                  '   gas             : ' +
-                  e.gas +
-                  '\n' +
-                  '   input           : ' +
-                  e.input
-              )
+            if ((accountAddress === '*' || accountAddress === e.from || accountAddress === e.to) && e.value !== '0') {
+              let object = {
+                from: e.from,
+                price: web3.utils.fromWei(e.value.toString(), 'Ether'),
+                to: e.to,
+                time: date.toUTCString()
+              }
+              setListObject(prevState => [...prevState, object])
             }
           })
         }
       }
-      // const accountAddress = accounts[0]
-      // const networkId = await web3.eth.net.getId()
-      // const networkData = ArtFundsStorage.networks[networkId]
-      // if (networkData) {
-      //   const ArtFundsContract = new web3.eth.Contract(ArtFundsStorage.abi, networkData.address)
-      //   const itemCount = await ArtFundsContract.methods.digitalItemCounter().call()
-      //   for (var i = 1; i <= itemCount; i++) {
-      //     let obj = await ArtFundsContract.methods.listAllDigitalItem(i).call()
-      //     if (obj.mintedBy !== accountAddress && obj.currentOwner === accountAddress) {
-      //       const result = await fetch(obj.itemURL)
-      //       const metaData = await result.json()
-      //       obj.imageURL = metaData.imageURL
-      //       obj.price = web3.utils.fromWei(obj.price.toString(), 'Ether')
-      //       obj.description = metaData.description
-      //       setListItem(prevState => [...prevState, obj])
-      //     }
-      //   }
-      // }
     }
-    // console.log(listItem)
   }
+  console.log(listObject)
 
-  return <div></div>
+  return (
+    <div className='myprofile'>
+      <div className='filter-left'>
+        <div className='filter-content'>
+          <ul className='status has-child'>
+            <h2>Hồ sơ của tôi</h2>
+            <h2 className='address'>{`Địa chỉ ví: ${address}`}</h2>
+            <li>Chỉnh sửa hồ sơ</li>
+            <li>Hoạt động của tôi</li>
+          </ul>
+        </div>
+      </div>
+
+      <div className='container-transaction'>
+        <div className='table-activity'>
+          <div className='container-table'>
+            <table className='activity'>
+              <tbody>
+                <tr>
+                  <th>Từ tài khoản</th>
+                  <th>Giá NFT</th>
+                  <th>Đến tài khoản</th>
+                  <th>Ngày giao dịch</th>
+                </tr>
+                {listObject.map(item => (
+                  <tr>
+                    <td>
+                      <a href='/'>{item.from}</a>
+                    </td>
+                    <td>{`${item.price} ETH`}</td>
+                    <td>
+                      <a href='/'>{item.to}</a>
+                    </td>
+                    <td>{item.time}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default MyProfile
