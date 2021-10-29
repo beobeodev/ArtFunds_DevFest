@@ -47,10 +47,10 @@ const NavBar = () => {
               </a>
             </li>
             <li>
-              <Link to='/marketplace'>
-                <a href='/' className='btn btn-nav'>
-                  Thị trường
-                </a>
+              <Link to='/marketplace' className='btn btn-nav'>
+                {/* <a href='/' className='btn btn-nav'> */}
+                Thị trường
+                {/* </a> */}
               </Link>
             </li>
             <li>

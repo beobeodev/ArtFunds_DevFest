@@ -18,7 +18,7 @@ contract ArtFundsStorage is ERC721 {
         string description;
     }
 
-    uint256 public collectionCounter;
+    uint256 public collectionCounter = 0;
     mapping(address => Collection[]) public ownerCollections;
 
     struct DigitalItem {
@@ -37,7 +37,7 @@ contract ArtFundsStorage is ERC721 {
     uint256 public digitalItemCounter;
     mapping(address => DigitalItem[]) public ownerDigitalItems;
 
-    DigitalItem[] public listAllDigitalItem;
+    mapping(uint256 => DigitalItem) public listAllDigitalItem;
 
     event ItemCreated(
         uint256 id,
@@ -105,7 +105,7 @@ contract ArtFundsStorage is ERC721 {
             _forSale
         );
 
-        listAllDigitalItem.push(newDigitalItem);
+        listAllDigitalItem[digitalItemCounter] = newDigitalItem;
         ownerDigitalItems[msg.sender].push(newDigitalItem);
     }
 
@@ -249,9 +249,7 @@ contract ArtFundsStorage is ERC721 {
         // the one who wants to buy the token should not be the token's owner
         require(tokenOwner != msg.sender);
         // get that token from all crypto boys mapping and create a memory of it defined as (struct => digitalItem)
-        DigitalItem memory digitalItem = ownerDigitalItems[tokenOwner][
-            _tokenId
-        ];
+        DigitalItem memory digitalItem = listAllDigitalItem[_tokenId];
         // price sent in to buy should be equal to or more than the token's price
         require(msg.value >= digitalItem.price);
         // token should be for sale
@@ -266,7 +264,7 @@ contract ArtFundsStorage is ERC721 {
         sendTo.transfer((msg.value * 95) / 100);
         sendToRoot.transfer((msg.value * 3) / 100);
         // send worth to marketplace
-        ARTFUNDS.transfer((msg.value * 2) / 100);
+        // ARTFUNDS.transfer((msg.value * 2) / 100);
         // update the token's previous owner
         // digitalItem.previousOwner = digitalItem.currentOwner;
         // update the token's current owner
@@ -274,7 +272,8 @@ contract ArtFundsStorage is ERC721 {
         // update the how many times this token was transfered
         digitalItem.numberOfTransfers += 1;
         // set and update that token in the mapping
-        ownerDigitalItems[msg.sender][_tokenId] = digitalItem;
+        listAllDigitalItem[_tokenId] = digitalItem;
+        // ownerDigitalItems[msg.sender].push(digitalItem);
         return true;
     }
 

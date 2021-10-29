@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './MarketPlace.css'
 import ArtFundsStorage from '../../abis/ArtFundsStorage.json'
 import Web3 from 'web3'
+import { Link } from 'react-router-dom'
 
 const MarketPlace = () => {
   const [listItem, setListItem] = useState([])
@@ -19,8 +20,6 @@ const MarketPlace = () => {
       window.web3 = new Web3(window.ethereum)
     } else if (window.web3) {
       window.web3 = new Web3(Web3.currentProvider || 'http://localhost:8545')
-    } else {
-      alert('Vui lòng kết nối đến Metamask')
     }
   }
 
@@ -33,15 +32,16 @@ const MarketPlace = () => {
       const ArtFundsContract = new web3.eth.Contract(ArtFundsStorage.abi, networkData.address)
       const itemCount = await ArtFundsContract.methods.digitalItemCounter().call()
       console.log(itemCount)
-      for (var i = 0; i < itemCount; ++i) {
+      for (var i = 1; i <= itemCount; ++i) {
         const obj = await ArtFundsContract.methods.listAllDigitalItem(i).call()
         const result = await fetch(obj.itemURL)
         const metaData = await result.json()
         obj.imageURL = metaData.imageURL
         obj.price = web3.utils.fromWei(obj.price.toString(), 'Ether')
+        obj.description = metaData.description
+        setListItem(prevState => [...prevState, obj])
       }
     }
-    // console.log(listItem)
   }
 
   return (
@@ -115,22 +115,22 @@ const MarketPlace = () => {
         </div>
         <div className='market_collection'>
           {listItem.map(item => (
-            <div className='market_wrapped'>
-              <div className='market_card-image'>
-                <img src={item.imageURL} />
-              </div>
-              <div className='market_card-content'>
-                <div id='author'>
-                  <a href='/'>{item.name}</a>
+            <div className='market_wrapped' key={item.tokenId}>
+              <Link to={`/detailitem/${item.tokenId}`}>
+                <div className='market_card-image'>
+                  <img src={item.imageURL} alt='item' />
                 </div>
-                <div className='market_container-content'>
-                  <div id='nameItem'>{item.description}</div>
+                <div className='market_card-content'>
+                  <div id='author'>{item.name}</div>
+                  <div className='market_container-content'>
+                    <div id='nameItem'>{item.description}</div>
+                  </div>
                 </div>
-              </div>
-              <div className='market_choose'>
-                <p id='price'>{item.price}</p>
-                <a href='/'>Xem chi tiết</a>
-              </div>
+                <div className='market_choose'>
+                  <p id='price'>{`${item.price} ETH`}</p>
+                  {/* <a href='/'>Xem chi tiết</a> */}
+                </div>
+              </Link>
             </div>
           ))}
         </div>

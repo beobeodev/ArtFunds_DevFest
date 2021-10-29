@@ -32,9 +32,9 @@ button {
 }
 
 .mycollection_new-collection {
-  padding-top: 1mycollection_5rem;
-  padding-bottom: 1mycollection_5rem;
-  padding-left: 2mycollection_5rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  padding-left: 2.5rem;
 }
 
 /* Grid for created collections */
@@ -48,7 +48,7 @@ button {
   align-items: center;
   flex-direction: column;
   columns: 5 300px;
-  column-gap: 1mycollection_5rem;
+  column-gap: 1.5rem;
   width: 100%;
   margin: 0 auto;
 }
@@ -56,16 +56,16 @@ button {
 .mycollection_collection .mycollection_wrapped {
   width: 150px;
   padding: 1rem;
-  margin: 0 1mycollection_5rem 1mycollection_5rem 0;
+  margin: 0 1.5rem 1.5rem 0;
   display: inline-block;
   width: 100%;
   cursor: pointer;
   border-radius: 2px;
-  transition: all 0mycollection_3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 .mycollection_collection .mycollection_wrapped:hover {
-  transform: scale(0mycollection_9);
-  box-shadow: 2px 5px 5px 5px rgba(0, 0, 0, 0mycollection_5);
+  transform: scale(0.9);
+  box-shadow: 2px 5px 5px 5px rgba(0, 0, 0, 0.5);
 }
 
 .mycollection_collection .mycollection_wrapped img {
@@ -94,7 +94,7 @@ button {
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0mycollection_4); /* Black w/ opacity */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
 /* Modal Content */
@@ -174,7 +174,7 @@ textarea {
   /* margin-top: 20px; */
   color: #333;
   font-size: 1em;
-  transition: all 0mycollection_4s;
+  transition: all 0.4s;
   cursor: pointer;
 }
 .mycollection_js .mycollection_input-file {
@@ -204,7 +204,7 @@ textarea {
 }
 .mycollection_js .mycollection_file-return {
   font-style: italic;
-  font-size: 0mycollection_9em;
+  font-size: 0.9em;
   font-weight: bold;
 }
 .mycollection_js .mycollection_file-return:not(:empty):before {
@@ -231,7 +231,7 @@ textarea {
 .mycollection_search-bar input[type='search'] {
   padding-left: 45px;
   height: 42px;
-  border: 0mycollection_5px solid;
+  border: 0.5px solid;
   border-radius: 10px;
   background-color: #f4f4f4f4;
   font-size: 16px;
@@ -250,12 +250,12 @@ textarea {
 }
 
 .mycollection_search-bar input:focus .mycollection_search-icon {
-  transform: scale(1mycollection_5);
+  transform: scale(1.5);
 }
 
 .mycollection_search-bar input:focus {
   border: none;
-  box-shadow: 2px 5px 5px 5px rgba(0, 0, 0, 0mycollection_2);
+  box-shadow: 2px 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 .mycollection_search-bar .mycollection_btn-dark {

@@ -8,6 +8,7 @@ import Web3 from 'web3'
 import ArtFundsStorage from './abis/ArtFundsStorage.json'
 import ListItem from './pages/ListItem/ListItem'
 import MarketPlace from './pages/MarketPlace/MarketPlace'
+import DetailItem from './pages/DetailItem/DetailItem'
 
 const App = () => {
   const [allCollectionUser, setAllCollectionUser] = useState([])
@@ -68,6 +69,7 @@ const App = () => {
       <Route path='/mycollection' render={() => <MyCollection listMyCollection={allCollectionUser} />} />
       <Route path='/createNFT/:nameCollection/:idCollection' render={() => <ListItem />} />
       <Route path='/marketplace' render={() => <MarketPlace />} />
+      <Route path='/detailitem/:idItem' render={() => <DetailItem />} />
     </Router>
   )
 }
