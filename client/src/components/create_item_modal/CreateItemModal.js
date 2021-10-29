@@ -18,7 +18,7 @@ const CreateItemModal = ({ isShow, onToggle, idCollection }) => {
     file: null
   })
 
-  const [account, setAccount] = useState(null)
+  // const [account, setAccount] = useState(null)
 
   const onSelectImage = async e => {
     if (!e.target.files || e.target.files.length === 0) {
@@ -42,17 +42,15 @@ const CreateItemModal = ({ isShow, onToggle, idCollection }) => {
 
   const onSubmitForm = async e => {
     e.preventDefault()
-    console.log('asasd')
     try {
-      let web3
-      if (window.ethereum) {
-        let web3 = new Web3(Web3.currentProvider || 'http://localhost:8545')
-        const accounts = await web3.eth.getAccounts()
-        if (accounts.length === 0) {
-          alert('Vui lòng thêm tài khoản trong Metamask')
-        } else {
-          setAccount(accounts[0])
-        }
+      let account
+
+      const web3 = window.web3
+      const accounts = await web3.eth.getAccounts()
+      if (accounts.length === 0) {
+        alert('Vui lòng thêm tài khoản trong Metamask')
+      } else {
+        account = accounts[0]
       }
 
       if (account) {

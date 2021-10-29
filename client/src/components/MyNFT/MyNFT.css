@@ -2,36 +2,35 @@ button {
   font-size: 16px;
 }
 
-.mycollection_btn-dark {
+.btn-dark {
   background: #333;
   color: #f4f4f4f4;
   border: 1px solid #333;
   padding: 12px;
   border-radius: 10px;
-  cursor: pointer;
 }
 
-.mycollection_my-collection {
+.my-collection {
   width: 80vw;
 }
-.mycollection_my-collection h1 {
+.my-collection h1 {
   padding-top: 12px;
 }
 
-.mycollection_my-collection p {
+.my-collection p {
   padding-top: 12px;
   padding-bottom: 12px;
 }
 
-.mycollection_my-collection .mycollection_container-title {
+.my-collection .container-title {
   text-align: center;
 }
 
-.mycollection_my-collection .mycollection_container {
+.my-collection .container {
   margin: 100px 0 0 0;
 }
 
-.mycollection_new-collection {
+.new-collection {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
   padding-left: 2.5rem;
@@ -39,11 +38,11 @@ button {
 
 /* Grid for created collections */
 
-.mycollection_container-collection {
+.container-collection {
   margin-top: 12px;
 }
 
-.mycollection_collection {
+.collection {
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -53,7 +52,7 @@ button {
   margin: 0 auto;
 }
 
-.mycollection_collection .mycollection_wrapped {
+.collection .wrapped {
   width: 150px;
   padding: 1rem;
   margin: 0 1.5rem 1.5rem 0;
@@ -63,17 +62,17 @@ button {
   border-radius: 2px;
   transition: all 0.3s ease-in-out;
 }
-.mycollection_collection .mycollection_wrapped:hover {
+.collection .wrapped:hover {
   transform: scale(0.9);
   box-shadow: 2px 5px 5px 5px rgba(0, 0, 0, 0.5);
 }
 
-.mycollection_collection .mycollection_wrapped img {
+.collection .wrapped img {
   max-height: 100%;
   max-width: 100%;
 }
 
-.mycollection_collection #title {
+.collection #title {
   margin: 5px 0;
   padding: 0;
   text-align: center;
@@ -82,8 +81,8 @@ button {
 }
 
 /* The Modal (background) */
-.mycollection_modal {
-  display: none; /* Hidden by default */
+.modal {
+  display: block; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   padding-top: 50px; /* Location of the box */
@@ -98,7 +97,7 @@ button {
 }
 
 /* Modal Content */
-.mycollection_modal-content {
+.modal-content {
   background-color: #fefefe;
   padding: 20px 40px;
   border: 1px solid #888;
@@ -128,20 +127,30 @@ textarea {
   max-height: 100px;
 } */
 
-.mycollection_modal-content h1 {
+.input_search {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  font-size: 16px;
+  font-weight: normal;
+  max-height: 100px;
+}
+
+.modal-content h1 {
   font-size: 20px;
   text-transform: uppercase;
   text-align: center;
   margin-top: 10px;
 }
 
-.mycollection_modal-content button {
+.modal-content button {
   width: 100%;
   margin-top: 15px;
   font-size: 20px;
 }
 /* The Close Button */
-.mycollection_close {
+.close {
   position: absolute;
   top: 10px;
   right: 20px;
@@ -150,24 +159,24 @@ textarea {
   font-weight: bold;
 }
 
-.mycollection_close:hover,
-.mycollection_close:focus {
+.close:hover,
+.close:focus {
   color: #000;
   text-decoration: none;
   cursor: pointer;
 }
 
 /* Image Upload */
-.mycollection_input-file-container {
+.input-file-container {
   position: relative;
   width: 225px;
 }
 
-.mycollection_input-file-container input[type='file'] {
+.input-file-container input[type='file'] {
   margin-top: 20px;
 }
 
-.mycollection_js .mycollection_input-file-trigger {
+.js .input-file-trigger {
   display: block;
   padding: 30px 45px;
   border: 1px dotted #000;
@@ -177,7 +186,7 @@ textarea {
   transition: all 0.4s;
   cursor: pointer;
 }
-.mycollection_js .mycollection_input-file {
+.js .input-file {
   position: absolute;
   top: 0;
   left: 0;
@@ -186,28 +195,28 @@ textarea {
   padding: 40px 0;
   cursor: pointer;
 }
-/* .mycollection_js .mycollection_input-file:hover + .mycollection_input-file-trigger,
-.mycollection_js .mycollection_input-file:focus + .mycollection_input-file-trigger,
-.mycollection_js .mycollection_input-file-trigger:hover,
-.mycollection_js .mycollection_input-file-trigger:focus {
+/* .js .input-file:hover + .input-file-trigger,
+.js .input-file:focus + .input-file-trigger,
+.js .input-file-trigger:hover,
+.js .input-file-trigger:focus {
   border: 1px dotted #000;
   background: #39d2b4;
   color: #333;
 } */
 
-.mycollection_file-return {
+.file-return {
   margin: 0;
 }
-.mycollection_file-return:not(:empty) {
+.file-return:not(:empty) {
   margin: 1em 0;
   margin-left: -60px;
 }
-.mycollection_js .mycollection_file-return {
+.js .file-return {
   font-style: italic;
   font-size: 0.9em;
   font-weight: bold;
 }
-.mycollection_js .mycollection_file-return:not(:empty):before {
+.js .file-return:not(:empty):before {
   content: 'File đã chọn: ';
   padding: auto;
   font-style: normal;
@@ -215,20 +224,20 @@ textarea {
 }
 
 /* Search Button */
-.mycollection_container-equip {
+.container-equip {
   display: flex;
   flex-wrap: nowrap;
   padding-left: -10px;
 }
 
-.mycollection_search-bar {
+.search-bar {
   width: 80%;
   vertical-align: middle;
   white-space: nowrap;
   position: relative;
 }
 
-.mycollection_search-bar input[type='search'] {
+.search-bar input[type='search'] {
   padding-left: 45px;
   height: 42px;
   border: 0.5px solid;
@@ -237,11 +246,11 @@ textarea {
   font-size: 16px;
 }
 
-.mycollection_search-icon {
+.search-icon {
   color: #65737e;
 }
 
-.mycollection_search-bar .mycollection_search-icon {
+.search-bar .search-icon {
   position: absolute;
   top: px;
   margin-left: 17px;
@@ -249,15 +258,97 @@ textarea {
   z-index: 1;
 }
 
-.mycollection_search-bar input:focus .mycollection_search-icon {
+.search-bar input:focus .search-icon {
   transform: scale(1.5);
 }
 
-.mycollection_search-bar input:focus {
+.search-bar input:focus {
   border: none;
   box-shadow: 2px 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
-.mycollection_search-bar .mycollection_btn-dark {
+.search-bar .btn-dark {
   padding: 20px;
+}
+
+.market_container-collection {
+  margin-top: 100px;
+  width: 78vw;
+}
+
+.market_collection {
+  margin-top: 15px;
+  width: 97%;
+  display: flex;
+  flex-direction: row;
+  column-gap: 7px;
+  flex-wrap: wrap;
+  justify-content: stretch;
+  align-items: flex-end;
+  row-gap: 20px;
+}
+
+.market_collection .market_wrapped {
+  width: 200px;
+  /* padding: 1rem; */
+  margin: 0 12px;
+  height: fit-content;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease-in-out;
+}
+
+.market_collection .market_wrapped:hover {
+  /* opacity: 0.market_8; */
+  box-shadow: 1px 5px 5px 1px rgba(0, 0, 0, 0.5);
+}
+
+.market_collection .market_wrapped .market_card-image {
+  min-height: 150px;
+  max-height: 200px;
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.market_collection .market_wrapped .market_card-image img {
+  /* position: absolute; */
+  width: 100%;
+  top: 0;
+  bottom: 0;
+}
+
+.market_card-content {
+  font-size: 14px;
+  margin: 10px;
+  /* border-bottom: #333; */
+}
+
+.market_card-content #author,
+.market_card-content #nameItem {
+  margin: 0;
+  width: 70%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.market_card-content #author a {
+  color: #9b9b9b;
+}
+
+.market_card-content #author a:hover {
+  color: rgb(0, 0, 0);
+}
+
+/* .market_container-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+} */
+
+.market_wrapped .market_choose {
+  border-top: 1px solid rgb(0, 0, 0.2);
+  display: flex;
+  height: 50px;
 }

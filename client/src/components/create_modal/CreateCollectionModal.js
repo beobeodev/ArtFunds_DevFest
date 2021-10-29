@@ -58,16 +58,23 @@ const CreateCollectionModal = ({ isShow, onToggle }) => {
       //   }
       // })
 
-      let web3
+      // let web3
       let account
-      if (window.ethereum) {
-        web3 = new Web3(Web3.currentProvider || 'http://localhost:8545')
-        const accounts = await web3.eth.getAccounts()
-        if (accounts.length === 0) {
-          alert('Vui lòng kết nối tài khoản trong Metamask')
-        } else {
-          account = accounts[0]
-        }
+      // if (window.ethereum) {
+      //   web3 = new Web3(Web3.currentProvider || 'http://localhost:8545')
+      //   const accounts = await web3.eth.getAccounts()
+      //   if (accounts.length === 0) {
+      //     alert('Vui lòng kết nối tài khoản trong Metamask')
+      //   } else {
+      //     account = accounts[0]
+      //   }
+      // }
+      const web3 = window.web3
+      const accounts = await web3.eth.getAccounts()
+      if (accounts.length === 0) {
+        alert('Vui lòng thêm tài khoản trong Metamask')
+      } else {
+        account = accounts[0]
       }
 
       if (account) {

@@ -132,7 +132,7 @@
 }
 
 .market_collection .market_wrapped .market_card-image img {
-  position: absolute;
+  /* position: absolute; */
   width: 100%;
   top: 0;
   bottom: 0;
