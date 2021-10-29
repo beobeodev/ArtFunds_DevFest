@@ -67,7 +67,7 @@ contract ArtFundsStorage is ERC721 {
     constructor() ERC721("ArtFunds Collection", "CB") {
         collectionName = name();
         collectionNameSymbol = symbol();
-        ARTFUNDS = address(uint256(0xb6dC743c59122F7b2F0734c6CBe04b2B7155B24e));
+        ARTFUNDS = address(uint256(0x0972Db4E608b92899a0A9514257070502592362B));
     }
 
     // mint a new digital item
@@ -184,21 +184,25 @@ contract ArtFundsStorage is ERC721 {
         return true;
     }
 
-    function getCollectionByID(uint256 _tokenId) public view returns (
+    function getCollectionByID(uint256 _tokenId)
+        public
+        view
+        returns (
             uint256 _id,
             string memory _imageURL,
             string memory _name,
             string memory _description
-        ) {
-             Collection memory collection = listAllCollection[_tokenId];
+        )
+    {
+        Collection memory collection = listAllCollection[_tokenId];
 
-            return (
-                collection.tokenId,
-                collection.imageURL,
-                collection.name,
-                collection.description
-            );
-        }
+        return (
+            collection.tokenId,
+            collection.imageURL,
+            collection.name,
+            collection.description
+        );
+    }
 
     function getCollection(uint256 _tokenId, address _owner)
         public
@@ -288,6 +292,7 @@ contract ArtFundsStorage is ERC721 {
         digitalItem.currentOwner = msg.sender;
         // update the how many times this token was transfered
         digitalItem.numberOfTransfers += 1;
+        digitalItem.forSale = false;
         // set and update that token in the mapping
         listAllDigitalItem[_tokenId] = digitalItem;
         // ownerDigitalItems[msg.sender].push(digitalItem);

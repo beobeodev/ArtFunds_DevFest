@@ -11,13 +11,8 @@ const NavBar = () => {
     async function load() {
       let web3;
       if (window.ethereum) {
-<<<<<<< HEAD
-        let web3 = new Web3(Web3.currentProvider || "http://localhost:8545");
+        web3 = new Web3(Web3.currentProvider || "http://localhost:8545");
         const accounts = await web3.eth.getAccounts();
-=======
-        web3 = new Web3(Web3.currentProvider || 'http://localhost:8545')
-        const accounts = await web3.eth.getAccounts()
->>>>>>> 34e66afc0f0eb0f9709300ca626a485e09fe6618
         if (accounts.length !== 0) {
           setAccountAddress(accounts[0]);
         }
@@ -49,11 +44,7 @@ const NavBar = () => {
         <div id="navbar">
           <ul>
             <li>
-<<<<<<< HEAD
-              <Link to="/#" className="btn btn-nav">
-=======
-              <Link to='/' className='btn btn-nav'>
->>>>>>> 34e66afc0f0eb0f9709300ca626a485e09fe6618
+              <Link to="/" className="btn btn-nav">
                 Trang chủ
               </Link>
             </li>
@@ -62,50 +53,28 @@ const NavBar = () => {
                 Thị trường
               </Link>
             </li>
-<<<<<<< HEAD
-            <li>
-              <Link to="/#" className="btn btn-nav">
-                Bộ sưu tập
-              </Link>
-            </li>
-            <li>
-              <Link to="/#" className="btn btn-nav">
-                Tài khoản
-              </Link>
-              <ul>
-                <li>
-                  <Link to="/" className="dropdown_account">
-=======
             {/* <li>
               <a href='/#' className='btn btn-nav'>
                 Kết nối ví
               </a>
             </li> */}
             <li>
-              <span className='btn btn-nav'>Tài khoản</span>
+              <span className="btn btn-nav">Tài khoản</span>
               <ul>
                 <li>
-                  <Link to='/myprofile' className='dropdown_account'>
->>>>>>> 34e66afc0f0eb0f9709300ca626a485e09fe6618
+                  <Link to="/myprofile" className="dropdown_account">
                     Hồ sơ của tôi
                   </Link>
                 </li>
                 <li>
-<<<<<<< HEAD
-                  <Link to="/mycollection">Bộ sưu tập của tôi</Link>
-                </li>
-                <li>
-                  <Link to="/mynft">Những artwork đã mua</Link>
-=======
-                  <Link to='/mycollection' className='dropdown_account'>
+                  <Link to="/mycollection" className="dropdown_account">
                     Bộ sưu tập của tôi
                   </Link>
                 </li>
                 <li>
-                  <Link to='/mynft' className='dropdown_account'>
+                  <Link to="/mynft" className="dropdown_account">
                     Những artwork đã mua
                   </Link>
->>>>>>> 34e66afc0f0eb0f9709300ca626a485e09fe6618
                 </li>
               </ul>
             </li>

@@ -1,16 +1,16 @@
-import { Switch, Route } from 'react-router-dom'
-import NavBar from './components/navbar/NavBar'
-import './App.css'
-import Home from './pages/Home/Home'
-import MyCollection from './pages/MyCollection/MyCollection'
-import React, { useState } from 'react'
-import Web3 from 'web3'
-import ArtFundsStorage from './abis/ArtFundsStorage.json'
-import ListItem from './pages/ListItem/ListItem'
-import MarketPlace from './pages/MarketPlace/MarketPlace'
-import DetailItem from './pages/DetailItem/DetailItem'
-import MyNFT from './components/MyNFT/MyNFT'
-import MyProfile from './pages/MyProfile/MyProfile'
+import { Switch, Route } from "react-router-dom";
+import NavBar from "./components/navbar/NavBar";
+import "./App.css";
+import Home from "./pages/Home/Home";
+import MyCollection from "./pages/MyCollection/MyCollection";
+import React, { useState } from "react";
+import Web3 from "web3";
+import ArtFundsStorage from "./abis/ArtFundsStorage.json";
+import ListItem from "./pages/ListItem/ListItem";
+import MarketPlace from "./pages/MarketPlace/MarketPlace";
+import DetailItem from "./pages/DetailItem/DetailItem";
+import MyNFT from "./components/MyNFT/MyNFT";
+import MyProfile from "./pages/MyProfile/MyProfile";
 
 const App = () => {
   const [allCollectionUser, setAllCollectionUser] = useState([]);
@@ -46,6 +46,9 @@ const App = () => {
   const loadBlockchainData = async () => {
     const web3 = window.web3;
     const accounts = await web3.eth.getAccounts();
+    window.ethereum.on("accountsChanged", () => {
+      window.location.reload();
+    });
     if (accounts.length === 0) {
       alert("Vui lòng thêm tài khoản trong Metamask");
     } else {

@@ -39,12 +39,14 @@ const MarketPlace = () => {
       console.log(itemCount);
       for (var i = 1; i <= itemCount; ++i) {
         let obj = await ArtFundsContract.methods.listAllDigitalItem(i).call();
-        const result = await fetch(obj.itemURL);
-        const metaData = await result.json();
-        obj.imageURL = metaData.imageURL;
-        obj.price = web3.utils.fromWei(obj.price.toString(), "Ether");
-        obj.description = metaData.description;
-        setListItem((prevState) => [...prevState, obj]);
+        if (obj.forSale) {
+          const result = await fetch(obj.itemURL);
+          const metaData = await result.json();
+          obj.imageURL = metaData.imageURL;
+          obj.price = web3.utils.fromWei(obj.price.toString(), "Ether");
+          obj.description = metaData.description;
+          setListItem((prevState) => [...prevState, obj]);
+        }
       }
     }
   };
