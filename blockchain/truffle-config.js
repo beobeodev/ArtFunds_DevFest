@@ -1,11 +1,25 @@
+const HDWalletProvider = require("truffle-hdwallet-provider");
+
 module.exports = {
   networks: {
-    development: {
-      host: '127.0.0.1',
+    local: {
+      host: "127.0.0.1",
       port: 8545,
-      network_id: '*', // Match any network id
-      gas: 6721975
-    }
+      network_id: "*",
+    },
+    kovan: {
+      networkCheckTimeout: 10000000,
+      provider: () => {
+        return new HDWalletProvider(
+          "resemble slush spin nominee earth cheese neutral bring come dash blouse load",
+          "https://kovan.infura.io/v3/24105b90a95f4be0b6b0562b33cf673c",
+          0
+        );
+      },
+      network_id: "42",
+      gas: 8000000,
+      gasPrice: 21,
+    },
     // development: {
     //  host: "127.0.0.1",     // Localhost (default: none)
     //  port: 8545,            // Standard Ethereum port (default: none)
@@ -42,18 +56,18 @@ module.exports = {
   // mocha: {
   //   // timeout: 100000
   // },
-  contracts_directory: './contracts/',
-  contracts_build_directory: '../client/src/abis/',
+  contracts_directory: "./contracts/",
+  contracts_build_directory: "../client/src/abis/",
   // Configure your compilers
   compilers: {
     solc: {
-      version: '>=0.6.0 <0.8.0',
+      version: ">=0.6.0 <0.8.0",
       optimizer: {
         enabled: true,
-        runs: 200
-      }
-    }
-  }
+        runs: 200,
+      },
+    },
+  },
   // compilers: {
   //   solc: {
   //     version: '0.8.9' // Fetch exact version from solc-bin (default: truffle's version)
@@ -67,4 +81,4 @@ module.exports = {
   //     // }
   //   }
   // }
-}
+};

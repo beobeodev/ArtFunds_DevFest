@@ -36,13 +36,9 @@ contract ArtFundsStorage is ERC721 {
 
     uint256 public digitalItemCounter;
     mapping(address => DigitalItem[]) public ownerDigitalItems;
-<<<<<<< HEAD
-    DigitalItem[] allDigitalItem;
-=======
 
     DigitalItem[] public listAllDigitalItem;
 
->>>>>>> 8c454649543f6a65041eeb7bb87f68803d9ecd89
     event ItemCreated(
         uint256 id,
         uint256 belongByColID,
@@ -141,9 +137,7 @@ contract ArtFundsStorage is ERC721 {
     function getDigitalItem(uint256 _itemID, address _owner)
         public
         view
-        returns (
-            DigitalItem memory
-        )
+        returns (DigitalItem memory)
     {
         require(_owner != address(0x0));
         require(collectionCounter >= 0);

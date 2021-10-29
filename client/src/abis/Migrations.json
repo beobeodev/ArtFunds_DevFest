@@ -12,8 +12,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -26,8 +25,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -52,7 +50,7 @@
   "sourceMap": "105:399:2:-:0;;;155:10;132:33;;;;;;;;;;;;;;;;;;;;105:399;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "105:399:2:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;172:39;;;:::i;:::-;;;;;;;;;;;;;;;;;;;132:33;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;387:114;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;172:39;;;;:::o;132:33::-;;;;;;;;;;;;:::o;387:114::-;283:5;;;;;;;;;;269:19;;:10;:19;;;251:110;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;484:9:::1;457:24;:36;;;;387:114:::0;:::o",
   "source": "// SPDX-License-Identifier: MIT\r\n// pragma solidity >=0.4.22 <0.9.0;\r\npragma solidity >=0.6.0 <0.8.0;\r\n\r\ncontract Migrations {\r\n    address public owner = msg.sender;\r\n    uint256 public last_completed_migration;\r\n\r\n    modifier restricted() {\r\n      require(\r\n        msg.sender == owner,\r\n        \"This function is restricted to the contract's owner\"\r\n      );\r\n      _;\r\n    }\r\n\r\n    function setCompleted(uint256 completed) public restricted {\r\n        last_completed_migration = completed;\r\n    }\r\n}\r\n",
-  "sourcePath": "E:\\DSC\\DevFest\\ArtFunds\\ArtFunds_DevFest2021\\blockchain\\contracts\\Migrations.sol",
+  "sourcePath": "G:\\GitHub\\ArtFunds_DevFest\\blockchain\\contracts\\Migrations.sol",
   "ast": {
     "absolutePath": "project:/contracts/Migrations.sol",
     "exportedSymbols": {
@@ -893,11 +891,16 @@
       "links": {},
       "address": "0x1A52F9D995915a9e5de1c8228D256C72f80D29Fa",
       "transactionHash": "0x6fd29f4e8ffc82c98a171b2c1aa8c1205b3aa64ac366fefa04a3122efbed0955"
+    },
+    "1635512958649": {
+      "events": {},
+      "links": {},
+      "address": "0x07122D10374199b8e2cc3c1cfa7fd12B4ed31df8",
+      "transactionHash": "0x759a5ed6b450094d8b13319cc49771f073820e2e98ca51f81ab975d583ecd063"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-10-29T12:15:56.676Z",
-  "networkType": "ethereum",
+  "updatedAt": "2021-10-29T15:40:07.105Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
