@@ -1,0 +1,223 @@
+.market_marketplace {
+  margin: 0;
+  /* display: grid; */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.market_marketplace .market_filter-left {
+  background-color: #ffffff;
+  /* padding: 20px; */
+  margin: 0;
+  padding-top: 100px;
+  width: 100%;
+  line-height: 2;
+  font-size: 26px;
+  box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.2);
+  width: 20vw;
+  position: sticky;
+}
+
+.market_filter-left .market_fas {
+  font-size: 16px;
+  padding-right: 10px;
+}
+
+.market_filter-left h2 {
+  font-size: 18px;
+}
+
+.market_filter-left .market_checkbox {
+  padding-left: 15px;
+}
+
+.market_filter-left label {
+  margin-left: 10px;
+}
+
+.market_input_label {
+  margin-left: 10px;
+}
+
+.market_filter-left .market_filter-header {
+  width: 100%;
+  /* display: grid;
+  grid-template-columns: 3fr 1fr;
+  /* margin-left: -30px;
+  margin-right: 50px; */
+  display: flex;
+  flex-direction: row;
+  background-color: #9b9b9b;
+  /* border-bottom: 1px solid rgb(0, 0, 0.market_2); */
+  /* width: 90%; */
+  /* justify-content: left; */
+}
+
+.market_filter-left .market_filter-content {
+  padding: 20px;
+  font-size: 16px;
+}
+
+.market_filter-left .market_filter-content ul {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.market_filter-left .market_filter-content ul li {
+  margin: 10px 0;
+}
+
+.market_filter-left .market_price li {
+  display: flex;
+  justify-content: space-around;
+}
+
+.market_filter-left .market_price li input {
+  width: 120px;
+  height: 30px;
+
+  border: 1px solid rgb(0, 0, 0.2);
+  border-radius: 5px;
+  font-size: 14px;
+  padding: 10px;
+}
+
+.market_filter-left .market_filter-content ul h2 {
+  border-bottom: 1px solid rgb(0, 0, 0.2);
+}
+
+/* Grid for created collections */
+
+.market_container-collection {
+  margin-top: 100px;
+  width: 78vw;
+}
+
+.market_collection {
+  margin-top: 15px;
+  width: 97%;
+  display: flex;
+  flex-direction: row;
+  column-gap: 7px;
+  flex-wrap: wrap;
+  justify-content: stretch;
+  align-items: flex-end;
+  row-gap: 20px;
+}
+
+.market_collection .market_wrapped {
+  width: 200px;
+  /* padding: 1rem; */
+  margin: 0 12px;
+  height: fit-content;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease-in-out;
+}
+
+.market_collection .market_wrapped:hover {
+  /* opacity: 0.market_8; */
+  box-shadow: 1px 5px 5px 1px rgba(0, 0, 0, 0.5);
+}
+
+.market_collection .market_wrapped .market_card-image {
+  min-height: 150px;
+  max-height: 200px;
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.market_collection .market_wrapped .market_card-image img {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+}
+
+.market_card-content {
+  font-size: 14px;
+  margin: 10px;
+  /* border-bottom: #333; */
+}
+
+.market_card-content #author,
+.market_card-content #nameItem {
+  margin: 0;
+  width: 70%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.market_card-content #author a {
+  color: #9b9b9b;
+}
+
+.market_card-content #author a:hover {
+  color: rgb(0, 0, 0);
+}
+
+/* .market_container-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+} */
+
+.market_wrapped .market_choose {
+  border-top: 1px solid rgb(0, 0, 0.2);
+  display: flex;
+  height: 50px;
+}
+
+/* Search bar */
+.market_search-bar {
+  width: 100%;
+  margin-left: 30px;
+  vertical-align: middle;
+  white-space: nowrap;
+  position: relative;
+}
+
+.market_search-bar input[type='search'],
+.market_search-bar select {
+  height: 42px;
+  border: 0.5px solid;
+  border-radius: 10px;
+  background-color: #f4f4f4f4;
+  font-size: 16px;
+}
+
+.market_search-bar input[type='search'] {
+  width: 40%;
+  padding-left: 45px;
+}
+
+.market_search-bar select {
+  width: max-content;
+  padding-left: 10px;
+  margin-left: 10px;
+}
+
+.market_search-icon {
+  color: #65737e;
+}
+
+.market_search-bar .market_search-icon {
+  position: absolute;
+  top: -5px;
+  margin-left: 17px;
+  margin-top: 17px;
+  z-index: 1;
+}
+
+.market_search-bar input:focus .market_search-icon {
+  transform: scale(1.5);
+}
+
+.market_search-bar input:focus {
+  border: none;
+  box-shadow: 2px 5px 5px 5px rgba(0, 0, 0, 0.2);
+}

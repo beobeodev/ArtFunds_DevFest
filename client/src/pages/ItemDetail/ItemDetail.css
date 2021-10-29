@@ -1,0 +1,146 @@
+.itemdetail_main-container {
+  width: 80%;
+  margin-top: 70px;
+  display: grid;
+  grid-template-columns: 40% 55%;
+  justify-content: space-between;
+}
+
+.itemdetail_container-item {
+  margin: 50px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 1px 2px 5px 3px rgba(0, 0, 0, 0.2);
+}
+
+.itemdetail_container-item .itemdetail_container-image,
+.itemdetail_contract {
+  text-align: center;
+}
+
+.itemdetail_container-item .itemdetail_container-image img {
+  height: 300px;
+  box-shadow: 1px 5px 5px 1px rgba(0, 0, 0, 0.5);
+}
+
+.itemdetail_container-item .itemdetail_container-information {
+  padding-top: 10px;
+  /* line-height: 1.8; */
+}
+
+.itemdetail_container-item .itemdetail_container-information h1 {
+  font-size: 14px;
+  padding-bottom: 10px;
+}
+
+.itemdetail_container-item .itemdetail_container-information h2,
+.itemdetail_container-item .itemdetail_container-information .itemdetail_content #descript p {
+  font-size: 14px;
+  padding-bottom: 10px;
+}
+
+.itemdetail_container-item .itemdetail_container-information .itemdetail_content p span {
+  font-weight: bold;
+}
+
+.itemdetail_container-item .itemdetail_container-information .itemdetail_content {
+  line-height: 1.2;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.itemdetail_container-item .itemdetail_container-information .itemdetail_start,
+.itemdetail_container-item .itemdetail_container-information .itemdetail_end {
+  display: flex;
+  flex-direction: grid;
+  padding-top: 15px;
+  font-size: 14px;
+}
+
+.itemdetail_container-item .itemdetail_container-information .itemdetail_price,
+.itemdetail_content .itemdetail_contract {
+  /* margin: 10px; */
+  padding-top: 15px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.itemdetail_container-information .itemdetail_price h1 {
+  padding-top: 10px;
+  font-size: 20px;
+}
+
+.itemdetail_container-information .itemdetail_detail-contract {
+  font-size: 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 10px 0;
+}
+
+.itemdetail_container-information #idContract {
+  width: 90px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.itemdetail_button-buy button {
+  margin: auto;
+  padding: auto;
+  width: 100%;
+  font-size: 20px;
+  margin-top: 12px;
+}
+
+/* Properties */
+
+.itemdetail_table-properties {
+  text-align: center;
+  font-size: 14px;
+}
+
+.itemdetail_table-properties table {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+caption {
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+td,
+th {
+  padding: 8px;
+  text-overflow: ellipsis;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+  text-overflow: ellipsis;
+}
+
+tr:hover {
+  background-color: #ddd;
+  text-overflow: ellipsis;
+}
+
+/* Table buy */
+
+.itemdetail_container-transaction {
+  width: 100%;
+  margin: 0;
+}
+
+.itemdetail_container-transaction .itemdetail_table-buy {
+  margin: 50px 0;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 1px 2px 5px 3px rgba(0, 0, 0, 0.2);
+}
+
+.itemdetail_container-transaction .itemdetail_table-buy table {
+  width: 100%;
+}

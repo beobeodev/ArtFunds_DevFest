@@ -42,13 +42,17 @@ const CreateItemModal = ({ isShow, onToggle, idCollection }) => {
 
   const onSubmitForm = async e => {
     e.preventDefault()
+    console.log('asasd')
     try {
-      const web3 = window.web3
-      const accounts = await web3.eth.getAccounts()
-      if (accounts.length === 0) {
-        alert('Vui lòng thêm tài khoản trong Metamask')
-      } else {
-        setAccount(accounts[0])
+      let web3
+      if (window.ethereum) {
+        let web3 = new Web3(Web3.currentProvider || 'http://localhost:8545')
+        const accounts = await web3.eth.getAccounts()
+        if (accounts.length === 0) {
+          alert('Vui lòng thêm tài khoản trong Metamask')
+        } else {
+          setAccount(accounts[0])
+        }
       }
 
       if (account) {
@@ -116,19 +120,33 @@ const CreateItemModal = ({ isShow, onToggle, idCollection }) => {
           <button type='button' className='modal_close' onClick={onToggle}>
             <span className='close'>&times;</span>
           </button>
-          <label htmlFor='name'>Tên của NFT</label>
-          <input type='text' name='name' id='nameCollection' onChange={handleChange} />
-          <label htmlFor='price'>Giá</label>
-          <input name='price' id='price' onChange={handleChange} />
-          <label htmlFor='technical'>Kỹ thuật</label>
-          <input type='text' id='technique' name='technique' onChange={handleChange} />
-          <label htmlFor='material'>Vật liệu</label>
-          <input type='text' id='material' name='material' onChange={handleChange} />
-          <label htmlFor='color'>Màu vẽ - Chất liệu</label>
-          <input type='text' id='color' name='color' onChange={handleChange} />
-          <label htmlFor='style'>Trường phái</label>
-          <input type='text' id='style' name='field' onChange={handleChange} />
-          <label htmlFor='logo'>Logo</label>
+          <label htmlFor='name' className='itemmodal_label'>
+            Tên của NFT
+          </label>
+          <input type='text' name='name' className='itemmodal_input' id='nameCollection' onChange={handleChange} />
+          <label htmlFor='price' className='itemmodal_label'>
+            Giá
+          </label>
+          <input name='price' id='price' className='itemmodal_input' onChange={handleChange} />
+          <label htmlFor='technical' className='itemmodal_label'>
+            Kỹ thuật
+          </label>
+          <input type='text' id='technique' name='technique' className='itemmodal_input' onChange={handleChange} />
+          <label htmlFor='material' className='itemmodal_label'>
+            Vật liệu
+          </label>
+          <input type='text' id='material' name='material' className='itemmodal_input' onChange={handleChange} />
+          <label htmlFor='color' className='itemmodal_label'>
+            Màu vẽ - Chất liệu
+          </label>
+          <input type='text' id='color' className='itemmodal_input' name='color' onChange={handleChange} />
+          <label htmlFor='style' className='itemmodal_label'>
+            Trường phái
+          </label>
+          <input type='text' id='style' className='itemmodal_input' name='field' onChange={handleChange} />
+          <label htmlFor='logo' className='itemmodal_label'>
+            Logo
+          </label>
           {item.url ? (
             <img src={item.url} className='collection_image' alt='logo' />
           ) : (
@@ -140,9 +158,11 @@ const CreateItemModal = ({ isShow, onToggle, idCollection }) => {
               <p className='file-return'></p>
             </div>
           )}
-          <label htmlFor='discript'>Mô tả</label>
+          <label htmlFor='discript' className='itemmodal_label'>
+            Mô tả
+          </label>
           <textarea name='description' id='discript' cols='30' rows='10' onChange={handleChange}></textarea>
-          <button type='submit' className='btn-dark'>
+          <button type='submit' value='submit' className='btn-dark'>
             Tạo mới
           </button>
         </form>

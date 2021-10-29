@@ -104,6 +104,20 @@
   box-shadow: 0 3px 0 0 #93263a;
 }
 
+.button_disconnect {
+  width: 160px;
+  padding: 12px 0px;
+  font-weight: 600;
+  font-size: 20px;
+  border: 0;
+  border-radius: 30px;
+  color: white;
+  background-color: green;
+  cursor: pointer;
+  transition: all 0.25s linear;
+  box-shadow: 0 3px 0 0 #93263a;
+}
+
 .button_connect:hover {
   background-color: #ffe1de;
   color: #fd607d;
