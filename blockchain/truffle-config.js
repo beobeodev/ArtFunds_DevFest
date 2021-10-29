@@ -17,8 +17,15 @@ module.exports = {
         );
       },
       network_id: "42",
-      gas: 8000000,
-      gasPrice: 21,
+    },
+    ropsten: {
+      provider: () =>
+        new HDWalletProvider(
+          "resemble slush spin nominee earth cheese neutral bring come dash blouse load",
+          "https://ropsten.infura.io/v3/24105b90a95f4be0b6b0562b33cf673c",
+          0
+        ),
+      network_id: "3",
     },
     // development: {
     //  host: "127.0.0.1",     // Localhost (default: none)

@@ -77574,11 +77574,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.3",
-<<<<<<< HEAD
-  "updatedAt": "2021-10-29T15:40:05.064Z",
-=======
-  "updatedAt": "2021-10-29T15:00:23.283Z",
->>>>>>> 6c9c7d953efacf1a4ec521b597df3b652ac1e727
+  "updatedAt": "2021-10-29T18:10:29.604Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

@@ -10,9 +10,8 @@ const Home = () => {
           <div className="header-content">
             <h1>Khám Phá, Sưu Tầm và Tôn Vinh Nghệ Thuật Việt</h1>
             <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum
-              beatae explicabo neque recusandae delectus dicta architecto
-              consequatur harum omnis nam?
+              ArtFunds là nền tảng trưng bày và giao dịch tác phẩm nghệ thuật
+              Việt Nam thông qua công nghệ và thị trường NFT.
             </p>
           </div>
           <div className="header-image">
