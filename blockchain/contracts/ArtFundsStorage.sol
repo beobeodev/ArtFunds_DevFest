@@ -36,7 +36,7 @@ contract ArtFundsStorage is ERC721 {
 
     uint256 public digitalItemCounter;
     mapping(address => DigitalItem[]) public ownerDigitalItems;
-
+    DigitalItem[] allDigitalItem;
     event ItemCreated(
         uint256 id,
         uint256 belongByColID,
