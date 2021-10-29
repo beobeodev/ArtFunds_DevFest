@@ -93,7 +93,10 @@ const DetailItem = () => {
               <a href='/'>Tên tác giả</a>
             </h2> */}
             <h2>
-              Sở hữu bởi <span id='owner'>{item.currentOwner}</span>
+              Sở hữu bởi{' '}
+              <span id='owner' className='.owner'>
+                {item.currentOwner}
+              </span>
             </h2>
             <p id='descript'>
               <span>Mô tả: </span>
@@ -115,18 +118,20 @@ const DetailItem = () => {
           <div className='itemdetail_table-properties'>
             <table>
               <caption>Thuộc Tính</caption>
-              <tr>
-                <td id='nameProperty'>Chất liệu</td>
-                <td id='valueProperty'>{item.material}</td>
-              </tr>
-              <tr>
-                <td id='nameProperty'>Màu vẽ</td>
-                <td id='valueProperty'>{item.color}</td>
-              </tr>
-              <tr>
-                <td id='nameProperty'>Phong cách</td>
-                <td id='valueProperty'>{item.field}</td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td id='nameProperty'>Chất liệu</td>
+                  <td id='valueProperty'>{item.material}</td>
+                </tr>
+                <tr>
+                  <td id='nameProperty'>Màu vẽ</td>
+                  <td id='valueProperty'>{item.color}</td>
+                </tr>
+                <tr>
+                  <td id='nameProperty'>Phong cách</td>
+                  <td id='valueProperty'>{item.field}</td>
+                </tr>
+              </tbody>
             </table>
           </div>
 
@@ -164,28 +169,30 @@ const DetailItem = () => {
           <div className='itemdetail_container-table'>
             <table>
               <caption>Chi tiết giao dịch</caption>
-              <tr>
-                <th>Giá</th>
-                <th>Chủ sở hữu</th>
-              </tr>
-              <tr>
-                <td>0.007</td>
-                <td>
-                  <a href='/'>bedlan</a>
-                </td>
-              </tr>
-              <tr>
-                <td>0.007</td>
-                <td>
-                  <a href='/'>bedlan</a>
-                </td>
-              </tr>
-              <tr>
-                <td>0.007</td>
-                <td>
-                  <a href='/'>bedlan</a>
-                </td>
-              </tr>
+              <tbody>
+                <tr>
+                  <th>Giá</th>
+                  <th>Chủ sở hữu</th>
+                </tr>
+                <tr>
+                  <td>0.007</td>
+                  <td>
+                    <a href='/'>bedlan</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>0.007</td>
+                  <td>
+                    <a href='/'>bedlan</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>0.007</td>
+                  <td>
+                    <a href='/'>bedlan</a>
+                  </td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>

@@ -18,6 +18,12 @@
   width: 100%;
 }
 
+.owner {
+  width: 90px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .itemdetail_container-item .itemdetail_container-image,
 .itemdetail_contract {
   text-align: center;

@@ -17,6 +17,8 @@ const ListItem = () => {
 
   const [listItem, setListItem] = useState([]);
 
+  const [description, setDescription] = useState("");
+
   React.useEffect(() => {
     async function load() {
       await loadWeb3();
@@ -53,6 +55,12 @@ const ListItem = () => {
         const totalItemUser = await ArtFundsContract.methods
           .getDigitalItemOwnerCount(accountAddress)
           .call();
+
+        const collectionObj = await ArtFundsContract.methods
+          .listAllCollection(parseInt(idCollection))
+          .call();
+        setDescription(collectionObj.description);
+
         for (var i = 0; i < totalItemUser; i++) {
           let digitalItem = await ArtFundsContract.methods
             .getDigitalItem(i, accountAddress)
@@ -80,11 +88,7 @@ const ListItem = () => {
       <div className="container">
         <div className="container-collection">
           <h1 id="title-collection">{nameCollection}</h1>
-          <p id="discript-collection">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum numquam
-            excepturi eaque quidem culpa voluptate, repellendus veniam
-            aspernatur eveniet odit!
-          </p>
+          <p id="discript-collection">{description}</p>
         </div>
         <div className="container-equip">
           <div className="search-bar">

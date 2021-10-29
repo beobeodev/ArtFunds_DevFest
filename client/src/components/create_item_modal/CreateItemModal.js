@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import './CreateItemModal.css'
 import ipfsClient from '../../utils/ipfs'
 import ArtFundsStorage from '../../abis/ArtFundsStorage.json'
-import Web3 from 'web3'
+// import Web3 from 'web3'
 
 const CreateItemModal = ({ isShow, onToggle, idCollection }) => {
   const [item, setItem] = useState({

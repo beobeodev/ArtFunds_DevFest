@@ -3,7 +3,7 @@ import './CreateCollectionModal.css'
 import ReactDOM from 'react-dom'
 import ipfsClient from '../../utils/ipfs'
 import ArtFundsStorage from '../../abis/ArtFundsStorage.json'
-import Web3 from 'web3'
+// import Web3 from 'web3'
 
 const CreateCollectionModal = ({ isShow, onToggle }) => {
   // const [selectedFile, setSelectedFile] = useState()

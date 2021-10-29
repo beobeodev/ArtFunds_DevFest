@@ -57,11 +57,7 @@ const MyNFT = () => {
     <div className='my-collection'>
       <div className='container'>
         <div className='container-collection'>
-          <h1 id='title-collection'>Lorem ipsum dolor sit amet.</h1>
-          <p id='discript-collection'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum numquam excepturi eaque quidem culpa voluptate,
-            repellendus veniam aspernatur eveniet odit!
-          </p>
+          <h1 id='title-collection'>Danh sách những Artwork mà bạn đã mua</h1>
         </div>
         {/* <script type="text/javascript" src="/js/createcollection.js"></script>
           <script type="text/javascript" src="/js/dragfile.js"></script> */}

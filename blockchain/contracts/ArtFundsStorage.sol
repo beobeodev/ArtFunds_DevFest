@@ -39,6 +39,8 @@ contract ArtFundsStorage is ERC721 {
 
     mapping(uint256 => DigitalItem) public listAllDigitalItem;
 
+    mapping(uint256 => Collection) public listAllCollection;
+
     event ItemCreated(
         uint256 id,
         uint256 belongByColID,
@@ -169,6 +171,7 @@ contract ArtFundsStorage is ERC721 {
             _name,
             _description
         );
+        listAllCollection[collectionCounter] = collection;
         ownerCollections[msg.sender].push(collection);
 
         emit CollectionCreated(
@@ -180,6 +183,22 @@ contract ArtFundsStorage is ERC721 {
         );
         return true;
     }
+
+    function getCollectionByID(uint256 _tokenId) public view returns (
+            uint256 _id,
+            string memory _imageURL,
+            string memory _name,
+            string memory _description
+        ) {
+             Collection memory collection = listAllCollection[_tokenId];
+
+            return (
+                collection.tokenId,
+                collection.imageURL,
+                collection.name,
+                collection.description
+            );
+        }
 
     function getCollection(uint256 _tokenId, address _owner)
         public
