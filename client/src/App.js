@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import NavBar from './components/navbar/NavBar'
 import './App.css'
 import Home from './pages/Home/Home'
@@ -68,16 +68,18 @@ const App = () => {
   }
 
   return (
-    <Router>
+    <div>
       <NavBar />
-      <Route path='/' exact render={() => <Home />} />
-      <Route path='/mycollection' render={() => <MyCollection listMyCollection={allCollectionUser} />} />
-      <Route path='/createNFT/:nameCollection/:idCollection' render={() => <ListItem />} />
-      <Route path='/marketplace' render={() => <MarketPlace />} />
-      <Route path='/detailitem/:idItem' render={() => <DetailItem />} />
-      <Route path='/mynft' render={() => <MyNFT />} />
-      <Route path='/myprofile' render={() => <MyProfile />} />
-    </Router>
+      <Switch>
+        <Route path='/' exact render={() => <Home />} />
+        <Route path='/mycollection' render={() => <MyCollection listMyCollection={allCollectionUser} />} />
+        <Route path='/createNFT/:nameCollection/:idCollection' render={() => <ListItem />} />
+        <Route path='/marketplace' render={() => <MarketPlace />} />
+        <Route path='/detailitem/:idItem' render={() => <DetailItem />} />
+        <Route path='/mynft' render={() => <MyNFT />} />
+        <Route path='/myprofile' render={() => <MyProfile />} />
+      </Switch>
+    </div>
   )
 }
 
