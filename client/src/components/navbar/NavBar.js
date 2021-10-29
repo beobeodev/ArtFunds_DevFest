@@ -77,7 +77,7 @@ const NavBar = () => {
                   <a href='/mycollection'>Bộ sưu tập của tôi</a>
                 </li>
                 <li>
-                  <a href='/creatcollection.html'>Tạo bộ sưu tập mới</a>
+                  <a href='/mynft'>Những artwork đã mua</a>
                 </li>
               </ul>
             </li>

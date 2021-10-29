@@ -33,7 +33,7 @@ const MarketPlace = () => {
       const itemCount = await ArtFundsContract.methods.digitalItemCounter().call()
       console.log(itemCount)
       for (var i = 1; i <= itemCount; ++i) {
-        const obj = await ArtFundsContract.methods.listAllDigitalItem(i).call()
+        let obj = await ArtFundsContract.methods.listAllDigitalItem(i).call()
         const result = await fetch(obj.itemURL)
         const metaData = await result.json()
         obj.imageURL = metaData.imageURL
