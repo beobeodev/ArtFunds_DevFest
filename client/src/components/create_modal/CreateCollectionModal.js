@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import './CreateCollectionModal.css'
-import ReactDOM from 'react-dom'
-import ipfsClient from '../../utils/ipfs'
-import ArtFundsStorage from '../../abis/ArtFundsStorage.json'
+import React, { useState } from "react";
+import "./CreateCollectionModal.css";
+import ReactDOM from "react-dom";
+import ipfsClient from "../../utils/ipfs";
+import ArtFundsStorage from "../../abis/ArtFundsStorage.json";
 // import Web3 from 'web3'
 
 const CreateCollectionModal = ({ isShow, onToggle }) => {
@@ -19,7 +19,7 @@ const CreateCollectionModal = ({ isShow, onToggle }) => {
 
   // const [account, setAccount] = useState(null)
 
-  const onSelectImage = async e => {
+  const onSelectImage = async (e) => {
     if (!e.target.files || e.target.files.length === 0) {
       // setSelectedFile(undefined)
       return;
@@ -59,7 +59,7 @@ const CreateCollectionModal = ({ isShow, onToggle }) => {
       // })
 
       // let web3
-      let account
+      let account;
       // if (window.ethereum) {
       //   web3 = new Web3(Web3.currentProvider || 'http://localhost:8545')
       //   const accounts = await web3.eth.getAccounts()
@@ -69,12 +69,12 @@ const CreateCollectionModal = ({ isShow, onToggle }) => {
       //     account = accounts[0]
       //   }
       // }
-      const web3 = window.web3
-      const accounts = await web3.eth.getAccounts()
+      const web3 = window.web3;
+      const accounts = await web3.eth.getAccounts();
       if (accounts.length === 0) {
-        alert('Vui lòng thêm tài khoản trong Metamask')
+        alert("Vui lòng thêm tài khoản trong Metamask");
       } else {
-        account = accounts[0]
+        account = accounts[0];
       }
 
       if (account) {
@@ -82,10 +82,13 @@ const CreateCollectionModal = ({ isShow, onToggle }) => {
         const networkData = ArtFundsStorage.networks[networkId];
         console.log(networkId);
         if (networkData) {
-          const ArtFundsContract = new web3.eth.Contract(ArtFundsStorage.abi, networkData.address)
+          const ArtFundsContract = new web3.eth.Contract(
+            ArtFundsStorage.abi,
+            networkData.address
+          );
           // console.log(networkData.address)
-          const added = await ipfsClient.add(collection.file)
-          const url = `https://ipfs.infura.io/ipfs/${added.path}`
+          const added = await ipfsClient.add(collection.file);
+          const url = `https://ipfs.infura.io/ipfs/${added.path}`;
 
           // const a = await ArtFundsContract.methods
           //   .createCollection(url, collection.name, collection.description)
@@ -94,17 +97,16 @@ const CreateCollectionModal = ({ isShow, onToggle }) => {
           await ArtFundsContract.methods
             .createCollection(url, collection.name, collection.description)
             .send({ from: account })
-            .on('confirmation', (confNumber, receipt, latestBlockHash) => {
-              console.log(receipt)
+            .on("confirmation", (confNumber, receipt, latestBlockHash) => {
+              console.log(receipt);
             })
-            .on('error', (err, receipt) => {
-              console.log(err)
+            .on("error", (err, receipt) => {
+              console.log(err);
             });
           window.location.reload();
         }
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   if (isShow) {
@@ -117,7 +119,7 @@ const CreateCollectionModal = ({ isShow, onToggle }) => {
             </button>
           </div>
           <h1>Tạo bộ sưu tập mới của bạn</h1>
-          <label htmlFor='logo' className='collectionmodal_label'>
+          <label htmlFor="logo" className="collectionmodal_label">
             Logo
           </label>
           {/* <input type='file' name='logo' id='logo' onChange={onSelectImage} /> */}
@@ -136,15 +138,27 @@ const CreateCollectionModal = ({ isShow, onToggle }) => {
               <p className="file-return"></p>
             </div>
           )}
-          <label htmlFor='name' className='collectionmodal_label'>
+          <label htmlFor="name" className="collectionmodal_label">
             Tên bộ sưu tập
           </label>
-          <input type='text' name='name' id='nameCollection' className='input_name' onChange={handleChange} />
-          <label htmlFor='discript' className='collectionmodal_label'>
+          <input
+            type="text"
+            name="name"
+            id="nameCollection"
+            className="input_name"
+            onChange={handleChange}
+          />
+          <label htmlFor="discript" className="collectionmodal_label">
             Mô tả
           </label>
-          <textarea name='description' id='discript' cols='30' rows='10' onChange={handleChange}></textarea>
-          <button type='submit' className='btn-dark'>
+          <textarea
+            name="description"
+            id="discript"
+            cols="30"
+            rows="10"
+            onChange={handleChange}
+          ></textarea>
+          <button type="submit" className="btn-dark">
             Tạo mới
           </button>
         </form>
