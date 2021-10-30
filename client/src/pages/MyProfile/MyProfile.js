@@ -8,6 +8,8 @@ const MyProfile = () => {
 
   const [listObject, setListObject] = useState([])
 
+  const [balance, setBalance] = useState(0)
+
   React.useEffect(() => {
     async function load() {
       await loadWeb3()
@@ -37,14 +39,18 @@ const MyProfile = () => {
       setAddress(accountAddress)
       const number = await web3.eth.getBlockNumber()
 
-      console.log(number)
+      let getBalance = await web3.eth.getBalance(accountAddress)
+      getBalance = await web3.utils.fromWei(getBalance.toString(), 'Ether')
+      setBalance(getBalance)
+
+      // console.log(number)
       for (var i = 0; i < number; i++) {
         var block = await web3.eth.getBlock(i, true)
 
         var date = new Date(block.timestamp * 1000)
 
         if (block != null && block.transactions != null) {
-          block.transactions.forEach(function (e) {
+          block.transactions.forEach(e => {
             if ((accountAddress === '*' || accountAddress === e.from || accountAddress === e.to) && e.value !== '0') {
               let object = {
                 from: e.from,
@@ -68,6 +74,7 @@ const MyProfile = () => {
           <ul className='status has-child'>
             <h2>Hồ sơ của tôi</h2>
             <h2 className='address'>{`Địa chỉ ví: ${address}`}</h2>
+            <h2 className='address'>{`Số dư ví: ${balance} ETH`}</h2>
             <li>Chỉnh sửa hồ sơ</li>
             <li>Hoạt động của tôi</li>
           </ul>
