@@ -60,13 +60,7 @@ $ yarn start
 $ yarn build
 ```
 
-<<<<<<< HEAD
-### Contact and give an outstanding effort to us
-
-<h2 align="center">ArtFunds Team</h2>
-=======
 <h2 align="center">Contact and give an outstanding effort to ArtFunds Team</h2>
->>>>>>> 32b937768e272e930e9a43690b1a301880657931
 
 <table>
   <tbody>
