@@ -62,7 +62,7 @@ $ yarn build
 
 <h2 align="center">Contact and give an outstanding effort to ArtFunds Team</h2>
 
-<table>
+<table align="center">
   <tbody>
     <tr align="center">
       <td align="center">
@@ -91,7 +91,7 @@ $ yarn build
         </br>
         <a href="https://www.facebook.com/beobiebom/">Minh Duc</a>
       </td>
-        <td align="center">
+        <td valign="center">
         <img width="150" height="150"
         src="https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/242351821_1402522656811987_5416452119361674018_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=730e14&_nc_ohc=etOJrJ_RufEAX_7uVsD&_nc_ht=scontent.fdad3-1.fna&oh=42a748856841c04f6112634e4956a0b6&oe=6181E6E2">
         </br>
