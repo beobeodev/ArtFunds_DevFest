@@ -64,7 +64,7 @@ $ yarn build
 
 <table>
   <tbody>
-    <tr>
+    <tr align="center">
       <td align="center">
         <img width="150" height="150"
         src="https://scontent.fdad3-4.fna.fbcdn.net/v/t1.6435-9/167560124_1158026367965786_4456007989502876061_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=174925&_nc_ohc=VZadXq6WrHgAX8iZkTA&_nc_ht=scontent.fdad3-4.fna&oh=31aef6f1c00fb32e020bc51c579efa04&oe=61A1D94F">
@@ -78,7 +78,7 @@ $ yarn build
         <a href="https://www.facebook.com/trandinhphucnguyen">Tran Nguyen</a>
       </td>
     </tr>
-    <tr>
+    <tr align="center">
       <td align="center">
         <img width="150" height="150"
         src="https://scontent.fdad3-5.fna.fbcdn.net/v/t31.18172-8/15800177_568459200016663_6048824361441283694_o.jpg?_nc_cat=102&ccb=1-5&_nc_sid=174925&_nc_ohc=8SoUbacA-6EAX-tgAME&_nc_ht=scontent.fdad3-5.fna&oh=ace3414930772bc454e6ee3838586ea4&oe=61A105B8">
