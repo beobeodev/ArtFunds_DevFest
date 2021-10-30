@@ -11,6 +11,14 @@ const NavBar = () => {
     async function load() {
       let web3
       if (window.ethereum) {
+        window.web3 = new Web3(window.ethereum)
+        await window.ethereum.enable()
+        web3 = window.web3
+        const accounts = await web3.eth.getAccounts()
+        if (accounts.length !== 0) {
+          setAccountAddress(accounts[0])
+        }
+      } else if (window.web3) {
         web3 = new Web3(Web3.currentProvider || 'http://localhost:8545')
         const accounts = await web3.eth.getAccounts()
         if (accounts.length !== 0) {
